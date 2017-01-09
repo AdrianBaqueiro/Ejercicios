@@ -1,0 +1,25 @@
+.circleBase {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+	position:fixed;
+	
+}
+
+.type1 {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    border: 1px solid red;
+}
+.type2 {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border: 1px solid #000;
+}
+.type3 {
+    width: 500px;
+    height: 500px;
+    background: aqua;
+    border: 1px solid blue;
+}

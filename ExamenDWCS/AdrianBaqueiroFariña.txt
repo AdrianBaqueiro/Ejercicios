@@ -1,0 +1,519 @@
+EXAMEN DWCS
+
+
+Ejercicio 1
+
+
+	<?php
+
+	$numero = isset($_POST['numero']) ? $_POST['numero']: null;
+	$nombre = isset($_POST['nombre']) ? $_POST['nombre']: null;
+
+	if(!is_numeric($numero) && isset($_POST['numero']))
+		echo "introduce un numero";
+
+	if($numero == null)
+	{
+
+		print ("
+
+			<html>
+				<head>
+
+				</head>
+				<body>
+					<form method='POST' action='ejercicio1.php'>
+						<div>
+							Numero <input type='text' name='numero' />
+							Nombre <input type='text' name='nombre' />
+							<input type='submit' value='enviar'/>
+						</div>
+					</form>
+				</body>
+			</html>
+
+			");
+
+
+	}else
+	{
+	
+		print ("
+
+		<html>
+
+			<head></head>
+			<body>
+				<div>
+		");
+
+		$nCaracteres = strlen($nombre);
+		echo $nombre." Tiene: ".$nCaracteres. " caracteres y el numero es ".$numero. "</br> ";
+		for($i=0;$i<$nCaracteres;$i++)
+			echo $numero. "</br>";
+
+		print ("
+
+				</div>
+			</body>
+
+		</html>
+
+		");
+	}
+	
+?>
+
+
+
+
+Ejercicio 2
+
+<?php
+	
+	$numero = isset($_POST['numero']) ? $_POST['numero']: null;
+	$sNumero = isset($_POST['sNumero']) ? $_POST['sNumero']: null;
+	$array;
+
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio2.php'>
+				<div>
+					Numero <input type='text' name='numero' />
+						<select name='sNumero'> 
+								<option value='5'>5</option>
+								<option value='7'>7</option>
+								<option value='9'>9</option>
+						</select>
+					<input type='submit' value='enviar'/>
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+	if($numero!=null && isset($_POST['numero']))
+	{
+
+		$resto =$numero % $sNumero;
+		if($resto == 0)
+		{
+			echo "resto 0, no hay array";
+
+		}
+		else
+		{
+			$array = array();
+			for($i=0;$i<$resto;$i++)
+			{
+				if($i%2 == 0)
+					array_push($array, 'x');
+				else
+					array_push($array, 'y');
+			}
+			echo "Resto: ".$resto."</br>";
+			print_r( $array);
+		}
+	}
+
+	
+?>
+
+
+Ejercicio 3
+
+
+<?php
+	session_start();
+	$numero = isset($_POST['numero']) ? $_POST['numero']: null;
+	$sNumero = isset($_POST['sNumero']) ? $_POST['sNumero']: null;
+	$array = isset($_SESSION['array']) ? $_SESSION['array']: null;
+	if(isset($_POST['cargar']))
+	{
+		if($numero!= null)
+		{
+			$array = cargar($numero,$sNumero);
+			$_SESSION['array'] =$array;
+			echo "cargado";
+		}
+	}
+
+	if(isset($_POST['visualizar']))
+	{
+		
+			visualizar($numero,$sNumero,$array);
+
+	}
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio3.php'>
+				<div>
+					Numero <input type='text' name='numero' />
+						<select name='sNumero'> 
+								<option value='5'>5</option>
+								<option value='7'>7</option>
+								<option value='9'>9</option>
+						</select>
+					<input type='submit' value='Cargar' name='cargar'/>
+					<input type='submit' value='Visualizar' name='visualizar'/>
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+
+	function cargar($numero,$sNumero){
+		$resto =$numero % $sNumero;
+		$array = array();
+		for($i=0;$i<$resto;$i++)
+		{
+			if($i%2 == 0)
+				array_push($array, 'x');
+			else
+				array_push($array, 'y');
+		}
+		return $array;
+
+	}
+	function visualizar($numero,$sNumero,$array){
+
+		{	
+
+			//echo "Resto: ".$resto."</br>";
+			print_r($array);
+		}
+	}
+	
+?>
+
+
+Ejercicio 4
+
+	<?php
+	session_start();
+	$numero = isset($_POST['numero']) ? $_POST['numero']: null;
+	$sNumero = isset($_POST['sNumero']) ? $_POST['sNumero']: null;
+	$array = isset($_SESSION['array']) ? $_SESSION['array']: null;
+	if(isset($_POST['cargar']))
+	{
+		if($numero!= null)
+		{
+			$array = cargar($numero,$sNumero);
+			$_SESSION['array'] =$array;
+			echo "cargado";
+		}
+	}
+
+	if(isset($_POST['visualizar']))
+	{
+		
+			visualizar($numero,$sNumero,$array);
+
+	}
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio3.php'>
+				<div>
+					Numero <input type='text' name='numero' />
+						<select name='sNumero'> 
+								<option value='5'>5</option>
+								<option value='7'>7</option>
+								<option value='9'>9</option>
+						</select>
+					<input type='submit' value='Cargar' name='cargar'/>
+					<input type='submit' value='Visualizar' name='visualizar'/>
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+
+	function cargar($numero,$sNumero){
+		$resto =$numero % $sNumero;
+		$array = array();
+		for($i=0;$i<$resto;$i++)
+		{
+			if($i%2 == 0)
+				array_push($array, 'x');
+			else
+				array_push($array, 'y');
+		}
+		return $array;
+
+	}
+	function visualizar($numero,$sNumero,$array){
+
+		{	
+
+			//echo "Resto: ".$resto."</br>";
+			print_r($array);
+		}
+	}
+	
+?>
+
+
+
+
+Ejercicio 5
+	
+	
+	<?php	
+		
+	session_start();
+	$array = isset($_SESSION['array']) ? $_SESSION['array']: array();
+	$usuario = isset($_POST['usuario']) ? $_POST['usuario']: null;
+	$password = isset($_POST['password']) ? $_POST['password']: null;
+	
+	if($usuario!=null && $password!=null)
+	{
+		array_push($array, $usuario);
+		$_SESSION["array"] = $array;
+		setcookie($usuario.'[user]',$usuario,time()+10);
+		setcookie($usuario.'[pass]',$password,time()+10);
+
+	}
+
+
+	
+
+
+
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio5.php'>
+				<div>
+					Usuario <input type='text' name='usuario' />
+					Contraseña <input type='password' name='password' />
+					<input type='submit' value='enviar' />
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+
+	foreach ($_COOKIE as $key => $value) {
+		if(is_array($value))
+			foreach ($value as $key2 => $value2) {
+				echo $key2." ".$value2."<br>";
+			}
+	}
+	for($i=0;$i<count($array);$i++)
+		{
+			if(!isset($_COOKIE[$array[$i]]))
+			{
+				echo "sen nome <br>";
+			}
+		}
+
+?>
+
+
+	Ejercicio 5pagina2
+	
+	
+	<?php	
+		
+	session_start();
+	$array = isset($_SESSION['array']) ? $_SESSION['array']: array();
+	$usuario = isset($_POST['usuario']) ? $_POST['usuario']: null;
+	$password = isset($_POST['password']) ? $_POST['password']: null;
+	
+	if($usuario!=null && $password!=null)
+	{
+		array_push($array, $usuario);
+		$_SESSION["array"] = $array;
+		setcookie($usuario.'[user]',$usuario,time()+10);
+		setcookie($usuario.'[pass]',$password,time()+10);
+
+	}
+
+
+	
+
+
+
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio5.php'>
+				<div>
+					Usuario <input type='text' name='usuario' />
+					Contraseña <input type='password' name='password' />
+					<input type='submit' value='enviar' />
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+
+	foreach ($_COOKIE as $key => $value) {
+		if(is_array($value))
+			foreach ($value as $key2 => $value2) {
+				echo $key2." ".$value2."<br>";
+			}
+	}
+	for($i=0;$i<count($array);$i++)
+		{
+			if(!isset($_COOKIE[$array[$i]]))
+			{
+				echo "sen nome <br>";
+			}
+		}
+
+?>
+
+
+
+Ejercicio 6
+
+
+<?php	
+		
+	session_start();
+	$array = isset($_SESSION['array']) ? $_SESSION['array']: array();
+	$usuario = isset($_POST['usuario']) ? $_POST['usuario']: null;
+	$password = isset($_POST['password']) ? $_POST['password']: null;
+	
+	if($usuario!=null && $password!=null)
+	{
+		array_push($array, $usuario);
+		$_SESSION["array"] = $array;
+		setcookie($usuario.'[user]',$usuario,time()+10);
+		setcookie($usuario.'[pass]',$password,time()+10);
+
+	}
+
+
+	
+
+
+
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio5.php'>
+				<div>
+					Usuario <input type='text' name='usuario' />
+					Contraseña <input type='password' name='password' />
+					<input type='submit' value='enviar' />
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+
+	foreach ($_COOKIE as $key => $value) {
+		if(is_array($value))
+			foreach ($value as $key2 => $value2) {
+				echo $key2." ".$value2."<br>";
+			}
+	}
+	for($i=0;$i<count($array);$i++)
+		{
+			if(!isset($_COOKIE[$array[$i]]))
+			{
+				echo "sen nome <br>";
+			}
+		}
+
+?>
+
+
+
+Ejercicio 6 pagina 2
+
+	
+	<?php
+
+	$nome = isset($_POST['nome']) ? $_POST['nome']: null;
+	$ape1 = isset($_POST['ape1']) ? $_POST['ape1']: null;
+	$ape2 = isset($_POST['ape2']) ? $_POST['ape2']: null;
+	$idade = isset($_POST['idade']) ? $_POST['idade']: null;
+	$salario = isset($_POST['salario']) ? $_POST['salario']: 0;
+	
+
+	if(isset($_COOKIE['empregado']))
+		setcookie('empregado[salario]',$_COOKIE['empregado']['salario'] +10);
+
+
+
+	print ("
+
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<form method='POST' action='ejercicio6p2.php'>
+				<div>
+					<input type='submit' value='VER' name='ver'/>
+				</div>
+			</form>
+			<form method='POST' action='ejercicio6.php'>
+				<div>
+					<input type='submit' value='pagina1'/>
+				</div>
+			</form>
+		</body>
+	</html>
+
+	");
+
+	if(isset($_POST['ver']))
+	{
+		foreach ($_COOKIE['empregado'] as $key => $value) {
+			echo $key." ".$value."</br>";
+		}
+	}
+
+?>
+
+
+
+

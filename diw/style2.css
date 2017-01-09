@@ -1,0 +1,27 @@
+h1{
+	text-align:center;
+	margin-bottom:5%;
+}
+h2{
+	margin-left:1%;
+	margin-bottom:3%;
+}
+h3{
+	margin-left:1%;
+	margin-bottom:3%;
+}
+p{
+	margin:2%;
+	font-family: 'Open Sans', sans-serif;
+	text-indent:2%;
+}
+body{
+	width: 50%;
+	margin-left:25%;
+	resize: none;
+	min-width:720px;
+	border-radius: 22px 22px 22px 22px;
+	-moz-border-radius: 22px 22px 22px 22px;
+	-webkit-border-radius: 22px 22px 22px 22px;
+	border: 1px solid #000000;
+}

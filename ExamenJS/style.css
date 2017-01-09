@@ -1,0 +1,19 @@
+#cola > div{
+	width: 15%;
+	height:15%;
+	float:left;
+	
+}
+h1{
+	text-align:center;
+}
+#cola{
+	margin:20px;
+	margin-top:10%;
+}
+#botones{
+	width: 100%;
+	position:absolute;
+
+	margin-left:36%;
+}

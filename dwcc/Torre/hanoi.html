@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+
+<head>
+	<title>As torres de Hanoi</title> 
+	<meta charset="ISO-8859-1">
+	<LINK href="estilosHanoi.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="objects/Torre.js"></script>
+	<script type="text/javascript" src="objects/Ficha.js"></script>
+	<script type="text/javascript" src="objects/Nube.js"></script>
+	<script type="text/javascript" src="hanoi.js"></script>
+</head>
+<body>
+	<div id="cabeza">
+		<div class="ficha" id="fichaNube" style="width:80px;visibility:hidden"></div>
+	</div>
+	<div id="torre1" onclick="torre(0)">
+		<div class="titulo" >Torre 1</div>
+		<div class="recheo" style="height:170px;"></div>
+		<div class="ficha" id="torre1ficha1"  style="width:70px;visibility:hidden"></div>
+		<div class="ficha" id="torre1ficha2"  style="width:120px;visibility:hidden"></div>
+		<div class="ficha" id="torre1ficha3"  style="width:160px;visibility:hidden"></div>
+	</div>
+	<div id="torre2" onclick="torre(1)">
+		<div class="titulo" >Torre 2</div>
+		<div class="recheo" style="height:170px;"></div>
+		<div class="ficha" id="torre2ficha1"  style="width:70px;visibility:hidden"></div>
+		<div class="ficha" id="torre2ficha2"  style="width:120px;visibility:hidden"></div>
+		<div class="ficha" id="torre2ficha3"  style="width:160px;visibility:hidden"></div>
+		
+	</div>
+	<div id="torre3" onclick="torre(2)">
+		<div class="titulo" >Torre 3</div>
+		<div class="recheo" style="height:170px;"></div>
+		<div class="ficha" id="torre3ficha1"  style="width:70px;visibility:hidden"></div>
+		<div class="ficha" id="torre3ficha2"  style="width:120px;visibility:hidden"></div>
+		<div class="ficha" id="torre3ficha3"  style="width:160px;visibility:hidden"></div>
+	</div>
+	<div id ="mensaxes">
+		
+	</div>
+	<div id="botones">
+		<input type="button" value ="Resolver" onclick="iniciarResolver()"/>
+		<input type="button" value ="Reset" onclick="reinicio()" />
+	</div>
+</body>
+</html>

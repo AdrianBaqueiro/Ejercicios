@@ -1,0 +1,202 @@
+.ejercicio{
+	border: 1px solid black;
+	width: 33%;
+	height:20%;
+	float:left;
+
+}
+h1 > a {
+	text-decoration: none;
+	color:black;
+}
+
+#titulo{
+	border: 1px solid black;
+
+}
+#cuerpo{
+	position : absolute;
+
+}
+button {
+	border: 1px solid black;
+	background-color: #66FF00;
+}
+.ejercicios{
+	margin: 10%;
+	width:100%;
+}
+.ejercicio{
+	text-align: center;
+	height: 10%;
+	max-width: 200px;
+	min-width: 50px;
+	max-height: 200px;
+	min-height: 50px;
+}
+a{
+	text-align: center;
+	
+}
+.titulo{
+	text-align:center;
+	position: fixed;
+	right: 0%;
+	top: 5%;
+	width: 100%;
+	margin-top: -2.5em;
+	background-color: #00BFFF;
+	max-height: 10%;
+
+}
+
+
+
+
+/* Barra info usuarios */
+
+#userMenu{
+	float:left;
+	position: fixed;
+	bottom:0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	background-color: #00BFFF;
+
+	
+
+}
+.userMenu{
+	max-height: 20%;
+	float: left;
+	padding-left: 5px;
+	text-align: center;
+	margin: 5px;
+	border: 1px solid black;
+}
+#userMenu > #user{
+	max-width: 30%;
+	float: left;
+}
+#userMenu > #visita{
+	max-width: 30%;
+	float: left;
+}
+
+
+/* Style for userDetails */
+
+#userDetails{
+	position: absolute;
+	left: 38%;
+	top:30%;
+
+}
+#userDetails > #user{
+	text-align: center;
+	font-size: 25px;
+}
+#userDetails > #visitas{
+	margin-top: 5%;
+	text-align: center;
+	font-size: 20px;
+}
+
+
+
+
+
+/* login and alta css */
+h2{
+	text-align: center;
+	width: 250px;
+}
+
+.login{
+	z-index: 4;
+	width: 40%;
+	position: absolute;
+    top: 20%;
+    left: 47%;
+    margin-top: -50px;
+    margin-left: -100px;
+
+}
+.login > form > div{
+	padding:2px;
+	width: 250px;
+}
+.login > form > div > input{
+	float: right;
+}
+
+
+/* menu hamburguesa */
+
+
+#submenu{
+	float:right;
+	margin-right: 2px;
+	width: 50%;
+	
+}
+#list{
+	z-index: 10;
+	list-style: none;
+	display: none;
+	background-color: #008EFF;
+	float: right;
+	position: absolute;
+	top:30px;
+	right: 20px;
+	width: 20%;
+}
+#list li{
+	width: 100%;
+}
+#list a{
+	color:yellow;
+	font-size: 20px;
+}
+#config{
+	list-style: none;
+	display: none;
+	color:red;
+	font-size: 20px;
+}
+
+#hamburguesa{
+	max-height: 45px;
+	float:right;
+	position: absolute;
+	top:15px;
+	right: 20px;
+}
+#hamburguesa:hover ~ #list{
+	display: block;
+}
+
+
+#preferencias:hover ~ #config
+{
+	display: block;
+}
+#preferencias:hover > li ~ #config
+{
+	display: block;
+}
+#preferencias:hover ~ #list
+{
+	display: block;
+}
+#list:hover{
+	display: block;
+}
+#config:hover{
+	display: block;
+}
+
+
+
+

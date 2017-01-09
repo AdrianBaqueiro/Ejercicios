@@ -1,0 +1,31 @@
+form{
+	background-color: brown;
+	width: 60%;
+	margin: auto;
+	border: 2px solid black;
+}
+#nombre{
+	width: 80%;
+	height: 30%;
+}
+#numero {
+	width: 10%;
+}
+#fecha{
+	width: 20%;
+}
+span{
+	float:left;
+}
+text{
+	float:right;
+}
+.grupo{
+	margin: :auto;
+}
+a{
+	width:20%;
+}
+.radio{
+	margin:auto;
+}
