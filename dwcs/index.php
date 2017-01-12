@@ -22,7 +22,8 @@ include "menuBar/userBar.php";
 	//Mostrar($lista);
 	$user = $_SESSION['user'];
 	//echo "</br></br></br></br></br></br>";
-	$fecha = $_COOKIE[$user]['historial'];
+	if(isset($_COOKIE[$user]['historial']))
+		$fecha = $_COOKIE[$user]['historial'];
 	//echo "</br></br></br></br></br></br>".$fecha;
 ?>
 

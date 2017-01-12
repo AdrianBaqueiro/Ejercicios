@@ -9,19 +9,22 @@
 
 	if(!isset($_SESSION['cont']))
 		$_SESSION['cont'] = 0;
-
 	$user = isset($_POST['user']) ? $_POST['user']: null;
 	$pass = isset($_POST['pass']) ? $_POST['pass']: null;
 
 	if(isset($_POST['user']))
 	{
+		if(isset($_COOKIE[$user]['user']))
+		{
+			$_SESSION['user'] = $user;
 			$fechas = explode(";", $_COOKIE[$user]['historial']);
 			array_push($fechas, date('d/m H:i'));
 			$fechas = implode(";", $fechas);
-			echo "</br></br></br></br></br></br></br>";
+			
 			setcookie($user.'[historial]',$fechas,time()+3600,"/");
 			header('location:'."../index.php?");
 			die();
+		}
 
 	}else
 	{

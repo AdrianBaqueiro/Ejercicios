@@ -7,6 +7,7 @@ session_start();
 	if(isset($_POST['color']))
 		setcookie($_SESSION['user'].'[color]',$_POST['color'],time()+3600,"/");
 
+	echo $_POST['color'] . $_POST['idioma'];
 
 	header('location:'.$_SERVER['HTTP_REFERER']);
 	die();
