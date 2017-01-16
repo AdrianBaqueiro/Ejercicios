@@ -10,27 +10,20 @@
 
 	if(!isset($_SESSION['coches']))
 	{	
-		$_SESSION['coches'] = serialize(Array(''));
+		$_SESSION['coches'] = array();
 	}
 	
 
 	if($id != null)
 	{
-		$arrayCoches = unserialize($_SESSION['coches']);
+		$arrayCoches = $_SESSION['coches'];
 		$_SESSION['idL'] = $id;
 		$coche = new Coche($id,$marca,$cor,$portas);
-		array_push($arrayCoches,serialize($coche));
 		$_SESSION['coche'.$id] = serialize($coche);
+		array_push($arrayCoches,serialize($coche));
 		$_SESSION['coches'] = $arrayCoches;
+		setcookie("coches",serialize($arrayCoches));
 	}
-
-
-	/*foreach ($_SESSION as $key => $value) {
-		echo $key." ".$value;
-	}*/
-
-
-	print("");
 
 
 ?>
@@ -63,7 +56,7 @@
 				<input class="form-control" type="text" name="portas" id="portas"/>
 				
 			</div>
-				<input class="btn btn-default type="submit" value="Alta"/>
+				<input class="btn btn-default" type="submit" value="Alta"/>
 			
 		</form>
 	
@@ -89,7 +82,7 @@
 
 			</div>
 			<div class="input-group">
-				<input  class="btn btn-default .dropdown-menu-right" type="submit" name="submit" value="Comprobar Gasolina" />
+				<input  class="btn btn-default" type="submit" name="submit" value="Comprobar Gasolina" />
 			</div>
 			<div class="input-group">
 
@@ -110,6 +103,7 @@
 				else
 					$idCoche = $_SESSION['idL'];
 
+				$arrayCoches = unserialize($_COOKIE['coches']);
 				$coche = unserialize($_SESSION['coche'.$idCoche]);
 				$funcion = $_POST['submit'];
 				
@@ -134,6 +128,8 @@
 				}
 				$_SESSION['coche'.$idCoche] = serialize($coche);
 			}
+			
+			
 
 
 		?>
