@@ -6,9 +6,7 @@
 	$xardins;
 
 	$tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
-	$altura = isset($_POST['altura']) ? $_POST['altura']: null;
 	$cor = isset($_POST['cor']) ? $_POST['cor']: null;
-	$numFlores = isset($_POST['numFlores']) ? $_POST['numFlores']: null;
 	$numPetalos = isset($_POST['numPetalos']) ? $_POST['numPetalos']: null;
 	
 
@@ -101,14 +99,6 @@
 				<input type="text" name="tipo" class="form-control"  />
 			</div>
 			<div  class="input-group">
-				<span class="input-group-addon">altura</span>
-				<input type="text" name="altura" class="form-control"  />
-			</div>
-			<div  class="input-group">
-				<span class="input-group-addon">numero de flores</span>
-				<input type="text" name="numFlores" class="form-control"  />
-			</div>
-			<div  class="input-group">
 				<span class="input-group-addon">numero de petalos</span>
 				<input type="text" name="numPetalos"  class="form-control" />
 			</div>
@@ -116,7 +106,7 @@
 				<span class="input-group-addon">color petalos</span>
 				<input type="text" name="cor"  class="form-control" />
 			</div>
-			<input type="submit" value="CrearFlor" />
+			<input type="submit" value="CrearFlor" class="btn-group" />
 		</form>
 
 		<form method="POST" action="ejercicioFlores.php"> 
@@ -138,7 +128,7 @@
 		<form method="POST" action="ejercicioFlores.php"> 
 			<h2>Tipos Flor</h2>
 			<div  class="input-group">
-				<select name="selectMostrar">
+				<select name="selectMostrar" class="form-control">
 					<?php
 						for($i=0;$i<count($flores);$i++)
 						{
@@ -153,7 +143,7 @@
 		<form method="POST" action="ejercicioFlores.php"> 
 			<h2>Intercambio Petalos</h2>
 			<div  class="input-group">
-				<select name="selectI1">
+				<select name="selectI1" class="form-control">
 					<?php
 						for($i=0;$i<count($flores);$i++)
 						{
@@ -163,7 +153,7 @@
 				</select>
 			</div>
 			<div  class="input-group">
-				<select name="selectI2">
+				<select name="selectI2" class="form-control">
 					<?php
 						for($i=0;$i<count($flores);$i++)
 						{
@@ -197,7 +187,8 @@
 			<h2>Asignar Xardin</h2>
 			<input type="hidden" name="asignarXardin" />
 			<div  class="input-group">
-				<select name="flor">
+				<span class="input-group-addon">Flores</span>
+				<select name="flor" class="form-control">
 					<?php
 						for($i=0;$i<count($flores);$i++)
 						{
@@ -207,7 +198,8 @@
 				</select>
 			</div>
 			<div  class="input-group">
-				<select name="xardin">
+				<span class="input-group-addon">Xardins</span>
+				<select name="xardin" class="form-control">
 					<?php
 						for($i=0;$i<count($xardins);$i++)
 						{

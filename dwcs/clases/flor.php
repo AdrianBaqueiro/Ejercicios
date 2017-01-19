@@ -10,11 +10,10 @@
 	    public static $n_flores;
 	    private $xardins = array();
 
-	    function plantar_flor($tipo,$n_petalos,$cor,$altura,$n_flores){
+	    function plantar_flor($tipo,$n_petalos,$cor){
 
 	    	$this->tipo = $tipo;
-	    	$this->altura = $altura;
-	    	$this->n_flores = $n_flores;
+	    	$this->n_flores +=1;
 
 	    	for($i=0;$i<$n_petalos;$i++)
 	    	{
