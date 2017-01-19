@@ -3,6 +3,7 @@
 	require("clases/flor.php");
 		
 	$flores;
+	$xardins;
 
 	$tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
 	$altura = isset($_POST['altura']) ? $_POST['altura']: null;
@@ -16,6 +17,12 @@
 		$flores = unserialize($_SESSION['flores']);
 	}else
 		$flores = array();
+
+	if(isset($_SESSION['xardins']))
+	{
+		$xardins = unserialize($_SESSION['xardins']);
+	}else
+		$xardins = array();
 
 	//function plantar_flor($tipo,$n_petalos,$cor,$altura,$n_flores)
 	if($tipo!= null)
@@ -37,9 +44,42 @@
 			}
 		}
 	}
+
 	if(isset($_POST['ordenar']))
 	{
+
+		usort($flores, "shortObject");
+		$_SESSION['flores'] = serialize($flores);
 		
+	}
+	if(isset($_POST['selectMostrar']))
+	{
+		$i = $_POST['selectMostrar'];
+		$flores[$i]->contemplar_flor();
+	}
+	if(isset($_POST['selectI1']) &&  isset($_POST['selectI2']) )
+	{
+		$i = $_POST['selectI1'];
+		$e = $_POST['selectI2'];
+		$aux = $flores[$i]->getN_petalos();
+		$flores[$i]->setN_petalos($flores[$e]->getN_petalos());
+		$flores[$e]->setN_petalos($aux);
+		$_SESSION['flores'] = serialize($flores);
+	}
+	//function alta_xardin($nome,$ubicacion,$capacidade)
+	if(isset($_POST["crearXardin"]))
+	{
+		$xardin = new Xardin();
+		$xardin->alta_xardin($_POST['nome'],$_POST['ubicacion'],$_POST['capacidade']);
+		array_push($xardins, $xardin);
+		$_SESSION['xardins'] = serialize($xardins);
+	}
+	if(isset($_POST['asignarXardin']))
+	{
+		$flor = $_POST['flor'];
+		$xardin = $_POST['xardin'];
+		$flores[$flor]->asignar_Xardin($xardins[$xardin]);
+		$_SESSION['flores'] = serialize($flores);
 	}
 
 ?>
@@ -76,7 +116,7 @@
 				<span class="input-group-addon">color petalos</span>
 				<input type="text" name="cor"  class="form-control" />
 			</div>
-			<input type="submit" value="crearFlor" />
+			<input type="submit" value="CrearFlor" />
 		</form>
 
 		<form method="POST" action="ejercicioFlores.php"> 
@@ -86,6 +126,7 @@
 			</div>
 			<input type="submit" value="Buscar Flor" />
 		</form>
+
 		<form method="POST" action="ejercicioFlores.php"> 
 			<h2>Ordenar Flor</h2>
 			<div  class="input-group">
@@ -94,7 +135,117 @@
 			<input type="submit" value="Ordenar Flores" />
 		</form>
 
+		<form method="POST" action="ejercicioFlores.php"> 
+			<h2>Tipos Flor</h2>
+			<div  class="input-group">
+				<select name="selectMostrar">
+					<?php
+						for($i=0;$i<count($flores);$i++)
+						{
+							echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					?>
+				</select>
+			</div>
+			<input type="submit" value="mostrar" />
+		</form>
+
+		<form method="POST" action="ejercicioFlores.php"> 
+			<h2>Intercambio Petalos</h2>
+			<div  class="input-group">
+				<select name="selectI1">
+					<?php
+						for($i=0;$i<count($flores);$i++)
+						{
+							echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					?>
+				</select>
+			</div>
+			<div  class="input-group">
+				<select name="selectI2">
+					<?php
+						for($i=0;$i<count($flores);$i++)
+						{
+							echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					?>
+				</select>
+			</div>
+			<input type="submit" value="Intercambio" />
+		</form>
+
+		<form method="POST" action="ejercicioFlores.php"> 
+			<h2>Crear Xardin</h2>
+			<input type="hidden" name="crearXardin" />
+			<div  class="input-group">
+				<span class="input-group-addon">Nome Xardin</span>
+				<input type="text" name="nome" class="form-control"  />
+			</div>
+			<div  class="input-group">
+				<span class="input-group-addon">Ubicacion</span>
+				<input type="text" name="ubicacion" class="form-control"  />
+			</div>
+			<div  class="input-group">
+				<span class="input-group-addon">Capacidade</span>
+				<input type="text" name="capacidade" class="form-control"  />
+			</div>
+			<input type="submit" value="CrearXardin" />
+		</form>
+
+		<form method="POST" action="ejercicioFlores.php"> 
+			<h2>Asignar Xardin</h2>
+			<input type="hidden" name="asignarXardin" />
+			<div  class="input-group">
+				<select name="flor">
+					<?php
+						for($i=0;$i<count($flores);$i++)
+						{
+							echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					?>
+				</select>
+			</div>
+			<div  class="input-group">
+				<select name="xardin">
+					<?php
+						for($i=0;$i<count($xardins);$i++)
+						{
+							echo "<option value=".$i.">".$xardins[$i]->getNome()."</option>";
+						}
+					?>
+				</select>
+			</div>
+			<input type="submit" value="Asignar" />
+		</form>
+
 
 
 	</body>
 </html>
+
+
+
+
+
+
+<?php
+
+
+
+
+
+
+function shortObject($a, $b)
+{
+    return strcmp($a->getTipo(), $b->getTipo());
+}
+
+
+
+
+
+
+
+
+?>

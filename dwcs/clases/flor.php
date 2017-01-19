@@ -24,7 +24,15 @@
 	    }
 
 	    function contemplar_flor(){
-	       echo "tipo: ".$this->tipo."</br>Numero de petalos: ".count($this->n_petalos)."</br>altura flores: ".$this->altura."</br>numero de flores: ".$this->n_flores."</br>";
+	       echo "tipo: ".$this->tipo."</br>Numero de petalos: ".count($this->n_petalos)."</br>altura flores: ".$this->altura."</br>numero de flores: ".$this->n_flores."</br>Xardins</br>";
+	       if(count($this->xardins)!=0)
+	       {
+	       		for($i=0;$i<count($this->xardins);$i++)
+	       		{
+	       			echo $this->xardins[$i]->ver_xardin();
+	       		}
+	       }
+
 	    }
 
 	    function cambiar_cor($cor){
@@ -49,14 +57,21 @@
 
 	    }
 
-	    function asignar_xardin($nome,$ubicacion,$capacidade){
+	    function asignar_xardin($xardin){
 
-	    	array_push($this->xardins, new Xardin($nome,$ubicacion,$capacidade));
+	    	array_push($this->xardins,$xardin);
 	    	
 	    }
 	    function getTipo(){
 	    	return $this->tipo;
 	    }
+	    function getN_petalos(){
+	    	return $this->n_petalos;
+	    }
+	    function setN_petalos($n_petalos){
+	    	return $this->n_petalos = $n_petalos;
+	    }
+
 
 	}
 
