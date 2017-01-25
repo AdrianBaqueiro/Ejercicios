@@ -1,0 +1,22 @@
+.centrar{
+	text-align : center;
+}
+ 
+ .primerP{
+	 border: thick solid;
+	 color : #33C;
+	 text-align: center;
+	 background-color: #CF6;
+	 padding: 10px;
+ }
+ .hiper{
+	 color:red;
+ }
+ .cabeceira{
+	 background-color:yellow;
+	 font-size:20px;
+	 text-align: center;
+ }
+ .centrarTable{
+	 margin-left:25%;
+ }

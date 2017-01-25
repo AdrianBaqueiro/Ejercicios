@@ -6,26 +6,27 @@
 
 	 	protected $tipo;
 	    private $n_petalos = array();
-	    public static $altura;
-	    public static $n_flores;
+	    static $altura = 0;
+	    static $n_flores = 0;
 	    private $xardins = array();
 
 	    function plantar_flor($tipo,$n_petalos,$cor){
 
 	    	$this->tipo = $tipo;
-	    	$this->n_flores +=1;
 
 	    	for($i=0;$i<$n_petalos;$i++)
 	    	{
 				$this->n_petalos[$i] = new Petalo($i,$cor); 
 	    	}
+	    	Flor::incrementar_flores();
 
 	    }
 
 	    function contemplar_flor(){
-	       echo "tipo: ".$this->tipo."</br>Numero de petalos: ".count($this->n_petalos)."</br>altura flores: ".$this->altura."</br>numero de flores: ".$this->n_flores."</br>Xardins</br>";
+	       echo "tipo: ".$this->tipo."</br>Numero de petalos: ".count($this->n_petalos)."</br>altura flores: ".self::$altura."</br>numero de flores: ".self::$n_flores."</br>";
 	       if(count($this->xardins)!=0)
 	       {
+	       	echo "Xardins</br>";
 	       		for($i=0;$i<count($this->xardins);$i++)
 	       		{
 	       			echo $this->xardins[$i]->ver_xardin();
@@ -43,16 +44,15 @@
 	    }
 
 	    function regar_flor($altura){
-	    	$this->altura += $altura;
+	    	self::$altura;
 	    }
 
 	    function contar_flores(){
-	    	echo $this->n_flores."</br>";
-
+	    	echo self::$n_flores."</br>";
 	    }
 
-	    function incrementar_flores(){
-	    	$this->n_flores += 1;
+	    function  incrementar_flores(){
+	    	return self::$n_flores++;
 
 	    }
 

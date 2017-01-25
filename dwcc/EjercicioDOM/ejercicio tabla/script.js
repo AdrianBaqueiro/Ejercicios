@@ -4,19 +4,32 @@ var imagenes;
 var imagen1;
 var imagen2;
 var finDelJuego;
+var overlay;
+var cont;
+var parejas = 0;
+var score;
+var divCount;
 
 window.onload = function(){
+	
 	photos = new Array();
 	imagenes = new Array();
 	imagen1 = null;
 	imagen2 = null;
 	finDelJuego = false;
+	overlay = document.getElementById("body");
+	
 	generarImg();
-
 	inicio();
 	almacenarNodo();
 	borrarImg();
 	
+	score = createScore();
+	divCount = createScore();
+	overlay.appendChild(score);
+	overlay.appendChild(divCount);
+	updateCount();
+	updateScore();
 	
 }
 
@@ -44,7 +57,7 @@ function inicio(){
 function crearTabla(filas,columnas){
 
 	tabla = document.createElement("table");
-	
+	cont = (columnas * 3) + (filas *2) - ((columnas * filas )/2);
 	for(i=0;i<filas;i++)
 	{
 		tr = document.createElement("tr");
@@ -61,6 +74,7 @@ function crearTabla(filas,columnas){
 	ponerImagen(filas,columnas);
 	
 }
+
 function ponerImagen(filas,columnas){
 	
 	
@@ -91,6 +105,7 @@ function ponerImagen(filas,columnas){
 	}
 	
 }
+
 function comprobarNum(num,numeros){
 	var repetido = false;
 	for(e=0;e<numeros.length;e++)
@@ -114,6 +129,7 @@ function generarImg(){
 			e++;
 	}
 }
+
 function almacenarNodo()
 {
 	nodos = document.getElementsByTagName("img");
@@ -122,6 +138,7 @@ function almacenarNodo()
 		imagenes[i] = nodos[i].cloneNode(true);
 	}
 }
+
 function borrarImg()
 {
 	nodos = document.getElementsByTagName("img");
@@ -132,6 +149,7 @@ function borrarImg()
 		nodos[i].setAttribute("src","img/baraja/dorso.jpg");
 	}
 }
+
 function mostrarImg(img){
 	
 	for(i=0;i<imagenes.length;i++)
@@ -148,7 +166,10 @@ function mostrarImg(img){
 		}	
 	}
 	//console.log();
-	setTimeout(	"comprobarImg()", 1000);
+	
+	overlay.setAttribute("style","pointer-events: none");
+	
+	setTimeout(	"comprobarImg()", 500);
 	//fin();
 	if(finDelJuego == true)
 	{
@@ -156,38 +177,63 @@ function mostrarImg(img){
 	}
 	console.log(finDelJuego);
 }
+
 function comprobarImg()
 {
+	
 	if(imagen1!=null && imagen2!=null)
 	{
+		cont=cont-1;
+		updateCount();
 		if(imagen1.getAttribute("src") == imagen2.getAttribute("src"))
 		{
+			parejas++;
+			updateScore();
 			imagen1.setAttribute("onclick","");
 			imagen2.setAttribute("onclick","");
 			imagen2.setAttribute("fin","1");
 			imagen1.setAttribute("fin","1");
 			imagen1 = null;
 			imagen2 = null;
+			overlay.setAttribute("style","pointer-events:''");
 		}else
 		{
 			imagen1.setAttribute("src","img/baraja/dorso.jpg");
 			imagen2.setAttribute("src","img/baraja/dorso.jpg");
 			imagen1 = null;
 			imagen2 = null;
+			overlay.setAttribute("style","pointer-events:''");
 		}
-	}
+	}else
+		overlay.setAttribute("style","pointer-events:''");
+	if(cont == 0)
+			fin();
 }
+
 function fin(){
-	nodos = document.getElementsByTagName("img");
+	overlay.setAttribute("style","pointer-events: none");
+	divCount.innerHTML ="Fin del juego";
 	
-	for(i=0;i<nodos.length;i++)
-	{
-		if(nodos[i].getAttribute("fin") != 1)
-		{
-			finDelJuego = false;
-		}else
-			finDelJuego = true;
-	}
+}
+
+function createScore(){
+	
+	div = document.createElement("div");
+	return div;
+	
+}
+function createCont(){
+	
+	div = document.createElement("div");
+	return div;
+	
+}
+
+function updateScore(){
+	score.innerHTML = "Parejas encontradas: "+parejas;
+}
+function updateCount(){
+	divCount.innerHTML ="Numero de intentos: "+ cont;
 }
 
 
