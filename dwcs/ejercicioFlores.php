@@ -6,18 +6,36 @@
 		<link  rel="stylesheet" type="text/css"  href="..\bootstrap-3.3.7-dist\css\bootstrap.css">
 	</head>
 	<body>
-		<form method="POST" action="ejercicioFlores.php">
-		<input type="hidden" name="action"/>
-			<div>
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="CrearFlor" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="BuscarFlor" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="OrdenarFlor" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="TiposFlor" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="IntercambioPetalos" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="CrearXardins" />
-				<input class="btn btn-default navbar-btn" type="submit" name="submit" value="AsignarXardins" />
-			</div>
-		</form>
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<form method="POST" action="ejercicioFlores.php">
+				<input type="hidden" name="action"/>
+				<ul  class="nav navbar-nav">
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="CrearFlor" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="BuscarFlor" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="OrdenarFlor" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="TiposFlor" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="IntercambioPetalos" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="CrearXardins" />
+					</li>
+					<li>
+						<input class="btn-link" type="submit" name="submit" value="AsignarXardins" />
+					</li>
+				</ul>
+			</form>
+		  </div>
+		</nav>
 	</body>
 </html>
 
@@ -28,6 +46,7 @@
 		
 	$flores;
 	$xardins;
+	$n_flores;
 
 	$tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
 	$cor = isset($_POST['cor']) ? $_POST['cor']: null;
@@ -46,14 +65,32 @@
 	}else
 		$xardins = array();
 
-	//function plantar_flor($tipo,$n_petalos,$cor,$altura,$n_flores)
+	if(isset($_SESSION['n_flores']))
+	{
+		$n_flores = $_SESSION['n_flores'];
+		Flor::$n_flores = $n_flores;
+	}else
+		$n_flores = Flor::$n_flores;
+	//If para mantener la ultima opción pulsada del menu
+	if($submit == null)
+	{
+		if(isset($_SESSION['submit']))
+			$submit = $_SESSION['submit'];
+		else
+			$submit = "default";
+	}
+
+
+
+
+	//function plantar_flor($tipo,$n_petalos,$cor)
 	if($tipo!= null)
 	{
 		$flor = new FLor();
 		$flor->plantar_flor($tipo,$numPetalos,$cor);
-		Flor::incrementar_flores();
 		array_push($flores, $flor);
 		$_SESSION['flores'] = serialize($flores);
+		$_SESSION['n_flores'] = Flor::$n_flores;
 	}
 
 	if(isset($_POST['tipoBuscar']))
@@ -134,7 +171,7 @@
 	}
 
 
-
+$_SESSION['submit'] = $submit;
 
 
 
@@ -147,7 +184,7 @@
 	function crearFlor()
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST"  class="well"  action="ejercicioFlores.php"> 
 				<h2>Crear Flor</h2>
 				<div  class="input-group">
 					<span class="input-group-addon">Tipo</span>
@@ -169,7 +206,7 @@
 	function buscarFlor()
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST"  class="well"  action="ejercicioFlores.php"> 
 				<h2>Buscar Flor</h2>
 				<div  class="input-group">
 					<input type="text" name="tipoBuscar" class="form-control"  />
@@ -183,7 +220,7 @@
 	function ordenarFlor()
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
 				<h2>Ordenar Flor</h2>
 				<div  class="input-group">
 					<input type="hidden" name="ordenar" class="form-control"  />
@@ -197,7 +234,7 @@
 	function tiposFlor($flores)
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
 				<h2>Tipos Flor</h2>
 				<div  class="input-group">
 					<select name="selectMostrar" class="form-control">
@@ -219,7 +256,7 @@
 	function intercambiarPetalos($flores)
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
 				<h2>Intercambio Petalos</h2>
 				<div  class="input-group">
 					<select name="selectI1" class="form-control">
@@ -250,7 +287,7 @@
 	function crearXardins()
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
 				<h2>Crear Xardin</h2>
 				<input type="hidden" name="crearXardin" />
 				<div  class="input-group">
@@ -272,7 +309,7 @@
 	function asignarXardins($flores,$xardins)
 	{
 
-		print('<form method="POST" action="ejercicioFlores.php"> 
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
 				<h2>Asignar Xardin</h2>
 				<input type="hidden" name="asignarXardin" />
 				<div  class="input-group">

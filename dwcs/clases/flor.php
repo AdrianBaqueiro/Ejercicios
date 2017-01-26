@@ -6,8 +6,8 @@
 
 	 	protected $tipo;
 	    private $n_petalos = array();
-	    static $altura = 0;
-	    static $n_flores = 0;
+	    public static $altura = 0;
+	    public static $n_flores = 0;
 	    private $xardins = array();
 
 	    function plantar_flor($tipo,$n_petalos,$cor){
@@ -23,7 +23,22 @@
 	    }
 
 	    function contemplar_flor(){
-	       echo "tipo: ".$this->tipo."</br>Numero de petalos: ".count($this->n_petalos)."</br>altura flores: ".self::$altura."</br>numero de flores: ".self::$n_flores."</br>";
+	       echo "<div class='well' class='list-group'>
+	       			<ul>
+						<li class='list-group-item'>
+							<p>Tipo: ".$this->tipo."</p>
+						</li>
+		       			<li class='list-group-item'>
+		       				<p>Numero de petalos: ".count($this->n_petalos)."</p>
+		       			</li>
+		       			<li class='list-group-item'>
+		       				<p>Altura flores: ".self::$altura."</p>
+		       			</li>
+		       			<li class='list-group-item'>
+		       				<p>Numero de flores: ".self::$n_flores."</p>
+		       			</li>
+	       			</ul>
+	    		 </div>";
 	       if(count($this->xardins)!=0)
 	       {
 	       	echo "Xardins</br>";
