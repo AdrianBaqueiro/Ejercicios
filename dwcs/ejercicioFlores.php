@@ -4,33 +4,55 @@
 	<head>
 		<title>Ejercicio Flores</title>
 		<link  rel="stylesheet" type="text/css"  href="..\bootstrap-3.3.7-dist\css\bootstrap.css">
+		<script src="..\bootstrap-3.3.7-dist\jq\jquery-3.1.1.js"></script>
+ 		<script src="..\bootstrap-3.3.7-dist\js\bootstrap.min.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
+		    <div class="navbar-header">
+			      <a class="navbar-brand">Ejercicio Flores</a>
+		    </div>
 			<form method="POST" action="ejercicioFlores.php">
 				<input type="hidden" name="action"/>
-				<ul  class="nav navbar-nav">
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="CrearFlor" />
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Flor<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<input  class="btn-link" type="submit" name="submit" value="CrearFlor" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="BuscarFlor" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="OrdenarFlor" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="TiposFlor" />
+							</li>
+						</ul>
 					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="BuscarFlor" />
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Petalo<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+
+								<input class="btn-link" type="submit" name="submit" value="IntercambioPetalos" />
+							</li>
+						</ul>
 					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="OrdenarFlor" />
-					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="TiposFlor" />
-					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="IntercambioPetalos" />
-					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="CrearXardins" />
-					</li>
-					<li>
-						<input class="btn-link" type="submit" name="submit" value="AsignarXardins" />
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Xardins<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="CrearXardins" />
+							</li>
+							<li> 
+								<input class="btn-link" type="submit" name="submit" value="AsignarXardins" />
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</form>

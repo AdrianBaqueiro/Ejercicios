@@ -1,0 +1,45 @@
+------------------------------- Instruccións para a tarefa 2 ---------------------------
+
+
+- Moitas destas tarefas pódense facer simplemente programando estilos (sin empregar jQuery para nada), pero o obxectivo do exercicio é aprender jQuery polo que tedes que facelo programando estilos cando sexa necesario e aplicándoos con jQuery ou ben aplicar o estilo directamente sin crear unha clase previa.
+
+ATENCIÓN: NON SE PERMITE MODIFICAR O CÓDIGO HTML ENTRE <BODY> E </BODY>
+
+------------------------------------------------------------------------
+
+//1.- A primeira e derradeira imaxen do documento aparecerán centradas.
+
+	
+//2.- Os párrafos que conteñan palabras "Galaxy S II" deberán aparecer con cor verde.
+
+	
+//3.-  Insertar antes da primeira e derradeira imaxe o texto alternativo da mesma centrado.
+	
+
+//4.- Os dous derradeiros párrafos do documento deberán aparecer co color de fondo #FFFFCC e alineados á dereita.
+	
+
+//5.- Engadir ó texto ALT de todas as imaxes o seguinte: " - Copyright aaaa.". Cubrindo o ano aaaa cos datos do noso ordenador.
+	
+
+//6.- O editor acaba de dicirnos que quere que eliminemos todos os párrafos que conteñan a palabra Xoom.
+
+	
+
+//7.- Eliminar todos os párrafos que conteñan soamente como contido &nbsp; NOTA: A función contains non sirve neste exemplo porque contains busca texto visible no navegador, non código html.
+//    Exemplo de párrafo que teríamos que eliminar <p>&nbsp;</p>
+
+
+/*8.- Crear unha nova liña separadora HR  con id="separador" despois do párrafo con id="final" e a continuación un novo párrafo co seguinte texto resumo:
+" Neste documento hai xx párrafos, dos cales xx están centrados.".
+" Temos xx imaxes e temos xx hiperenlaces */
+	
+
+//9.- Modifica-lo contido do texto do 7º párrafo do documento por "----Texto deste párrafo eliminado polo editor.-----"
+
+
+	
+//10.- Programar o botón copiar de tal xeito que cada vez que pulsemos fará unha copia da segunda imaxe e a insertará ó seu carón.
+
+
+------------------------------------------------------------------------

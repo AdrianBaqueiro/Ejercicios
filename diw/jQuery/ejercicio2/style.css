@@ -1,7 +1,10 @@
 .centrar{
-	text-align : center;
+	display: block;
+	margin: 0 auto;
 }
-
+.textcenter{
+	text-align: center;
+}
  .primerP{
 	 border: thick solid;
 	 color : #33C;
@@ -9,8 +12,12 @@
 	 background-color: #CF6;
 	 padding: 10px;
  }
- .hiper{
-	 color:red;
+ .green{
+	 color:green;
+ }
+ .fondo{
+	 background-color: #FFFFCC ;
+	 text-align: center;
  }
  .cabeceira{
 	 background-color:yellow;
