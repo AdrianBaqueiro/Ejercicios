@@ -1,11 +1,20 @@
 
 var photos;
 var imagenes;
-
+var intervalo;
 var finDelJuego;
-
+var arriba;
+var abajo;
+var derecha;
+var izquierda;
+var volver;
 window.onload = function(){
 
+	arriba = true;
+	abajo = true;
+	derecha = true;
+	izquierda = true;
+	volver = 0;
 	photos = new Array();
 	imagenes = new Array();
 	finDelJuego = false;
@@ -13,14 +22,7 @@ window.onload = function(){
 
 	inicio();
 	almacenarNodo();
-
-	score = createScore();
-	divCount = createScore();
-	overlay.appendChild(score);
-	overlay.appendChild(divCount);
-	updateCount();
-	updateScore();
-
+	intervalo = setInterval("desordenar()",500);
 }
 
 
@@ -32,15 +34,7 @@ function inicio(){
 	var columnas =4;
 	var aux = filas * columnas;
 
-	if(aux%2==0)
-	{
 		crearTabla(filas,columnas);
-	}
-	else
-	{
-		window.alert("la tabla tiene que ser par");
-		inicio();
-	}
 
 }
 
@@ -70,48 +64,27 @@ function ponerImagen(filas,columnas){
 
 
 	celdas = document.getElementsByTagName("td");
-	aleatorios = new Array();
 
-
-	for(i=0;aleatorios.length<celdas.length;)
-	{
-		random = Math.floor((Math.random()*(filas*columnas)));
-
-		if(comprobarNum(random,aleatorios) == false)
-		{
-			aleatorios[i] = random;
-			i++;
-		}
-
-	}
 
 	for(i=0;i<celdas.length;i++)
 	{
 		img = document.createElement("img");
-		img.setAttribute("src",photos[i]);
+
+
+		if(i==celdas.length-1)
+		{
+				img.setAttribute("src","img/vacio.png");
+		}else {
+				img.setAttribute("src",photos[i]);
+		}
 		img.setAttribute("id","id"+i);
-		img.setAttribute("onclick","mostrarImg(this)");
+		img.setAttribute("onclick","moverImg(this)");
 		img.setAttribute("fin","0");
 		celdas[i].appendChild(img);
+
 	}
 
 }
-
-function comprobarNum(num,numeros){
-	var repetido = false;
-	for(e=0;e<numeros.length;e++)
-	{
-		if(numeros[e] == num)
-		{
-			repetido = true;
-			break;
-		}
-		else
-			repetido = false;
-	}
-	return repetido;
-}
-
 
 function almacenarNodo()
 {
@@ -122,79 +95,90 @@ function almacenarNodo()
 	}
 }
 
-function borrarImg()
+function moverImg(img)
 {
 	nodos = document.getElementsByTagName("img");
 
 	for(i=0;i<nodos.length;i++)
 	{
-
-		nodos[i].setAttribute("src","img/baraja/dorso.jpg");
-	}
-}
-
-function mostrarImg(img){
-
-	for(i=0;i<imagenes.length;i++)
-	{
-		if(imagenes[i].getAttribute("id") == img.getAttribute("id"))
+		if(nodos[i].getAttribute("src")==img.getAttribute("src"))
 		{
-			img.setAttribute("src",imagenes[i].getAttribute("src"));
-			if(imagen1 == null)
+			if( (i+4) < 16)
 			{
-				imagen1 = img;
-			}else
-				if(imagen2 == null)
-					imagen2 = img;
-		}
+				if(nodos[i+4].getAttribute("src") == "img/vacio.png")
+				{
+					cambiarImg(nodos[i+4],img);
+					allTrue();
+				}
+			}else {
+				abajo = false;
+			}
+			if((i-4)> -1)
+			{
+				if(nodos[i-4].getAttribute("src") == "img/vacio.png")
+				{
+					cambiarImg(nodos[i-4],img);
+					allTrue();
+				}
+			}else {
+				arriba = false;
+			}
+			if((i-1) > -1 && (i-1)!=11 && (i-1)!=7 && (i-1)!=3)
+			{
+				if(nodos[i-1].getAttribute("src") == "img/vacio.png")
+				{
+					cambiarImg(nodos[i-1],img);
+					allTrue();
+				}
+			}else {
+				izquierda = false;
+			}
+			if((i+1) < 16 && (i+1) !=12 && (i+1)!=8 && (i+1)!= 4)
+			{
+				if(nodos[i+1].getAttribute("src") == "img/vacio.png")
+				{
+					cambiarImg(nodos[i+1],img);
+					allTrue();
+				}
+			}else {
+				derecha = false;
+			}
+			if(i == 15 && volver < 1)
+			{
+				if(nodos[i].getAttribute("src") == "img/vacio.png")
+				{
+					volver++;
+				}
+			}
 	}
-	//console.log();
-
-	overlay.setAttribute("style","pointer-events: none");
-
-	setTimeout(	"comprobarImg()", 500);
-	//fin();
-	if(finDelJuego == true)
-	{
-		alert("Has Ganado");
-	}
-	console.log(finDelJuego);
 }
-
-function comprobarImg()
+}
+function cambiarImg(nodo,img)
 {
-
-	if(imagen1!=null && imagen2!=null)
-	{
-		cont=cont-1;
-		updateCount();
-		if(imagen1.getAttribute("src") == imagen2.getAttribute("src"))
-		{
-			parejas++;
-			updateScore();
-			imagen1.setAttribute("onclick","");
-			imagen2.setAttribute("onclick","");
-			imagen2.setAttribute("fin","1");
-			imagen1.setAttribute("fin","1");
-			imagen1 = null;
-			imagen2 = null;
-			overlay.setAttribute("style","pointer-events:''");
-		}else
-		{
-			imagen1.setAttribute("src","img/baraja/dorso.jpg");
-			imagen2.setAttribute("src","img/baraja/dorso.jpg");
-			imagen1 = null;
-			imagen2 = null;
-			overlay.setAttribute("style","pointer-events:''");
-		}
-	}else
-		overlay.setAttribute("style","pointer-events:''");
-	if(cont == 0)
-			fin();
+	nodo.setAttribute("src",img.getAttribute("src"));
+	img.setAttribute("src","img/vacio.png");
 }
 
-function fin(){
-	overlay.setAttribute("style","pointer-events: none");
-	divCount.innerHTML ="Fin del juego";
+function desordenar()
+{
+	nodos = document.getElementsByTagName("img");
+	radom = Math.floor((Math.random() * 16));
+	moverImg(nodos[radom]);
 
+	//if()
+
+
+	if(volver < 1)
+	{
+		if(nodos[15].getAttribute("src") == "img/vacio.png")
+		{
+			clearInterval(intervalo);
+		}
+	}
+}
+function allTrue(){
+	arriba = true;
+	abajo = true;
+	derecha = true;
+	izquierda = true;
 }
