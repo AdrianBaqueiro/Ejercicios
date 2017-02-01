@@ -11,7 +11,7 @@
 		<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
-			      <a class="navbar-brand">Ejercicio Flores</a>
+			      <a class="navbar-brand" href ="ejercicioFlores.php">Ejercicio Flores</a>
 		    </div>
 			<form method="POST" action="ejercicioFlores.php">
 				<input type="hidden" name="action"/>
@@ -38,8 +38,16 @@
 						<a class="dropdown-toggle" data-toggle="dropdown">Petalo<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
-
 								<input class="btn-link" type="submit" name="submit" value="IntercambioPetalos" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="CambiarColor" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="ArrancarPetalo" />
+							</li>
+							<li>
+								<input class="btn-link" type="submit" name="submit" value="verPetalosFlor" />
 							</li>
 						</ul>
 					</li>
@@ -69,11 +77,17 @@
 	$flores;
 	$xardins;
 	$n_flores;
+	$florSel;
 
 	$tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
 	$cor = isset($_POST['cor']) ? $_POST['cor']: null;
 	$numPetalos = isset($_POST['numPetalos']) ? $_POST['numPetalos']: null;
 	$submit = isset($_POST['submit']) ? $_POST['submit']: null;
+	$flor = isset($_POST['flor']) ? $_POST['flor'] : null;
+	$color = isset($_POST['color']) ? $_POST['color'] : null;
+	$petalo = isset($_POST['petalo']) ? $_POST['petalo'] : null;
+	$petaloA = isset($_POST['petalosA']) ? $_POST['petalosA'] : null;
+
 	
 	if(isset($_SESSION['flores']))
 	{
@@ -101,18 +115,31 @@
 		else
 			$submit = "default";
 	}
+	if($flor == null)
+	{
+		if(isset($_SESSION['florSel']))
+		{
+			$florSel = unserialize($_SESSION['florSel']);
+		}else
+			$florSel = null;
+	}else
+		$florSel = $flores[$flor];
 
+	
 
-
+	
 
 	//function plantar_flor($tipo,$n_petalos,$cor)
 	if($tipo!= null)
 	{
 		$flor = new FLor();
 		$flor->plantar_flor($tipo,$numPetalos,$cor);
+		$florSel = $flor;
 		array_push($flores, $flor);
-		$_SESSION['flores'] = serialize($flores);
 		$_SESSION['n_flores'] = Flor::$n_flores;
+
+
+
 	}
 
 	if(isset($_POST['tipoBuscar']))
@@ -131,13 +158,14 @@
 	{
 
 		usort($flores, "shortObject");
-		$_SESSION['flores'] = serialize($flores);
+		
 		
 	}
 	if(isset($_POST['selectMostrar']))
 	{
 		$i = $_POST['selectMostrar'];
 		$flores[$i]->contemplar_flor();
+		$florSel = $flores[$i];
 	}
 	if(isset($_POST['selectI1']) &&  isset($_POST['selectI2']) )
 	{
@@ -146,7 +174,7 @@
 		$aux = $flores[$i]->getN_petalos();
 		$flores[$i]->setN_petalos($flores[$e]->getN_petalos());
 		$flores[$e]->setN_petalos($aux);
-		$_SESSION['flores'] = serialize($flores);
+		
 	}
 	//function alta_xardin($nome,$ubicacion,$capacidade)
 	if(isset($_POST["crearXardin"]))
@@ -154,14 +182,25 @@
 		$xardin = new Xardin();
 		$xardin->alta_xardin($_POST['nome'],$_POST['ubicacion'],$_POST['capacidade']);
 		array_push($xardins, $xardin);
-		$_SESSION['xardins'] = serialize($xardins);
+		
 	}
 	if(isset($_POST['asignarXardin']))
 	{
 		$flor = $_POST['flor'];
 		$xardin = $_POST['xardin'];
 		$flores[$flor]->asignar_Xardin($xardins[$xardin]);
-		$_SESSION['flores'] = serialize($flores);
+		
+	}
+	if(isset($_POST['CambiarColor']) && $color != null)
+	{
+		$nPetalos = $florSel -> getN_petalos();
+		$nPetalos[$petalo] -> setCor($color);
+		
+	}
+
+	if(isset($_POST['arrancarPetalo']))
+	{
+		$florSel ->  arranca_petalos($petaloA);
 	}
 
 	switch ($submit) {
@@ -175,7 +214,7 @@
 			ordenarFlor();
 			break;
 		case 'TiposFlor':
-			tiposFlor($flores);
+			tiposFlor($flores,$florSel);
 			break;
 		case 'IntercambioPetalos':
 			intercambiarPetalos($flores);
@@ -186,6 +225,16 @@
 		case 'AsignarXardins':
 			asignarXardins($flores,$xardins);
 			break;
+		case 'CambiarColor':
+			
+			cambiarColor($flores,$florSel);
+		break;
+		case 'ArrancarPetalo':
+			arrancarPetalo($flores,$florSel);
+		break;
+		case 'verPetalosFlor':
+			verPetalosFlor($flores,$florSel);
+		break;
 
 		default:
 			# code...
@@ -194,8 +243,9 @@
 
 
 $_SESSION['submit'] = $submit;
-
-
+$_SESSION['florSel'] = serialize($florSel);
+$_SESSION['flores'] = serialize($flores);
+$_SESSION['xardins'] = serialize($xardins);
 
 
 	function shortObject($a, $b)
@@ -253,7 +303,7 @@ $_SESSION['submit'] = $submit;
 	}
 
 
-	function tiposFlor($flores)
+	function tiposFlor($flores,$florSel)
 	{
 
 		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
@@ -263,7 +313,11 @@ $_SESSION['submit'] = $submit;
 		');
 							for($i=0;$i<count($flores);$i++)
 							{
-								echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+								if($flores[$i]->getTipo() == $florSel->getTipo())
+								{
+									echo "<option value=".$i." selected >".$flores[$i]->getTipo()."</option>";
+								}else
+									echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
 							}
 		print('
 					</select>
@@ -360,6 +414,130 @@ $_SESSION['submit'] = $submit;
 				<input  class="btn btn-default navbar-btn" type="submit" value="Asignar" />
 			</form>
 		');
+
+	}
+
+	function cambiarColor($flores,$florSel)
+	{
+
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
+				<h2>CambiarColor</h2>
+				<input type="hidden" name="CambiarColor" />
+				<div  class="input-group">
+					<span class="input-group-addon">Flores</span>
+					<select name="flor" class="form-control" onChange="this.form.submit()">
+					');
+						for($i=0;$i<count($flores);$i++)
+						{
+							if($flores[$i]->getTipo() == $florSel->getTipo())
+							{
+								echo "<option value=".$i." selected >".$flores[$i]->getTipo()."</option>";
+
+							}else
+								echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					print('
+					</select>
+				</div>
+				<div  class="input-group">
+					<span class="input-group-addon">Petalo</span>
+					<select name="petalo" class="form-control">
+					');
+						
+						$n_petalos = $florSel->getN_petalos();
+
+						for($i=0;$i<count($n_petalos);$i++)
+						{
+							echo "<option value=".$i.">".$n_petalos[$i]->getNum()."</option>";
+						}
+
+					print('
+					</select>
+				</div>
+				<div  class="input-group">
+					<span class="input-group-addon">Color</span>
+					<input type="text" name="color" class="form-control"  />
+				</div>
+				<input  class="btn btn-default navbar-btn" type="submit" value="CambiarColor" />
+			</form>');
+
+	}
+	function verPetalosFlor($flores,$florSel)
+	{
+
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
+				<h2>VerPetalos</h2>
+				<input type="hidden" name="verPetalosFlor" />
+				<div  class="input-group">
+					<span class="input-group-addon">Flores</span>
+					<select name="flor" class="form-control" onChange="this.form.submit()">
+					');
+						for($i=0;$i<count($flores);$i++)
+						{
+							if($flores[$i]->getTipo() == $florSel->getTipo()){
+
+									echo "<option value=".$i." selected>".$flores[$i]->getTipo()."</option>";
+
+								}else
+								echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					print('
+					</select>
+				</div>
+				
+					<div class="well" class="list-group">
+		       			<ul>
+					
+					');
+						
+						$n_petalos = $florSel->getN_petalos();
+
+						for($i=0;$i<count($n_petalos);$i++)
+						{
+							echo "<li class='list-group-item'>
+								<p>".$n_petalos[$i]->getNum()."</p>
+								</li>
+								<li class='list-group-item'>
+									<p>".$n_petalos[$i]->getCor()."</p>
+								</li>
+								";
+						}
+
+					print('
+						</ul>
+					</div>
+				
+			</form>');
+
+	}
+	function arrancarPetalo($flores,$florSel)
+	{
+
+		print('<form method="POST" class="well"  action="ejercicioFlores.php"> 
+				<h2>ArrancarPetalos</h2>
+				<input type="hidden" name="arrancarPetalo" />
+				<div  class="input-group">
+					<span class="input-group-addon">Flores</span>
+					<select name="flor" class="form-control" onChange="this.form.submit()">
+					');
+						for($i=0;$i<count($flores);$i++)
+						{
+							if($flores[$i]->getTipo() == $florSel->getTipo()){
+
+									echo "<option value=".$i." selected>".$flores[$i]->getTipo()."</option>";
+
+								}else
+								echo "<option value=".$i.">".$flores[$i]->getTipo()."</option>";
+						}
+					print('
+					</select>
+				</div>
+				<div  class="input-group">
+					<span class="input-group-addon">Petalos</span>
+					<input type="text" name="petalosA" class="form-control"  />
+				</div>
+				<input  class="btn btn-default navbar-btn" type="submit" value="arrancarPetalo" />
+			</form>');
 
 	}
 

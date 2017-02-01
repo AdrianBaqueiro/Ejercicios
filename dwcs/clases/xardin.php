@@ -17,7 +17,18 @@
 
 		}
 		function ver_xardin(){
-			echo "Nome xardin: ".$this->nome."</br>Ubicacion xardin: ".$this->ubicacion."</br>Capacidade xardin: ".$this->capacidade."</br>";
+			echo "
+
+			<li class='list-group-item'>
+				<p>Nome xardin: ".$this->nome."</p>
+			</li>
+			<li class='list-group-item'>
+				<p><p>Ubicacion xardin: ".$this->ubicacion."</p>
+			</li>
+			<li class='list-group-item'>
+				<p>Capacidade xardin: ".$this->capacidade."</p>
+			</li>
+			";
 		}
 		function getNome(){
 			return $this->nome;

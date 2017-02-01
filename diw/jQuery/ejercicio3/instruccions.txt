@@ -1,0 +1,35 @@
+------------------------------- Instruccións para a tarefa 3 ---------------------------
+
+ATENCIÓN: NON SE PERMITE MODIFICAR O CÓDIGO HTML ENTRE <BODY> E </BODY>
+
+---------------------------------------------------------------------------------
+// 1.- Cubrir o campo select dia cos días do 1 ata 31 de xeito automático.
+
+
+// 2.- Cubrir o campo select ano en orden inverso comenzando dende o ano actual e rematando 100 anos hacia atrás, de xeito automático.
+
+
+// 3.- Ocultar o fieldset con id infocontacto cando se cargue o documento, así como o 2º e 3º contenedores que están dentro do div que emprega a clase data.
+
+
+/* 4.- Ó facer click no texto "Datos Adicionais >>":
+	 - Amosará o fieldset con id infocontacto empregando un efecto de fadeToggle que dure 1 segundo e modificará o texto de "Mais datos >>" por 
+	   "<< Menos Datos" e viceversa, dependendo de si o div está visible ou non.
+	 - Situará o cursor no campo nome(ó amosar o fieldset) ou no campo usuario(cando ocultemos o fieldset).
+*/
+
+
+
+
+// 5.- Cando pulsemos o botón de submit do formulario comprobará que tódolos campos de texto e password teñan valores. 
+// 	   Os que teñan valores asignaralle a clase correctos e os que estén valeiros asignaralle a clase erros.
+// 	   Se hai algún erro deberá cancelar o evento de envío do formulario.
+// 	   Se non hai erros ó enviar amosará unha confirmación co texto "¿Está seguro/a de enviar este formulario?" 
+// 	   		Se respondemos que si, enviará o formulario e se respondemos que non, cancelará o envío.
+
+
+
+// 6.- Ó facer click no día amosará cun slideDown o contenedor do mes e xusto cando remate co mes fará o mesmo co contenedor do ano.
+
+
+------------------------------------------------------------------------

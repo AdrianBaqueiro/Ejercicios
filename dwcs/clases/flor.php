@@ -23,7 +23,8 @@
 	    }
 
 	    function contemplar_flor(){
-	       echo "<div class='well' class='list-group'>
+	       echo "<h2> Flor </h2>
+	       <div class='well' class='list-group'>
 	       			<ul>
 						<li class='list-group-item'>
 							<p>Tipo: ".$this->tipo."</p>
@@ -41,12 +42,17 @@
 	    		 </div>";
 	       if(count($this->xardins)!=0)
 	       {
-	       	echo "Xardins</br>";
+	       	echo "<h2>Xardins</h2>";
+	       	   echo "<div class='well' class='list-group'>
+	       			<ul>";
+
 	       		for($i=0;$i<count($this->xardins);$i++)
 	       		{
 	       			echo $this->xardins[$i]->ver_xardin();
 	       		}
 	       }
+	       echo 	"</ul>
+	    		 </div>";
 
 	    }
 
@@ -55,7 +61,10 @@
 	    }
 
 	    function arranca_petalos($petalos){
-	    	$this->n_petalos -= $petalos;
+	    	for($i=0;$i<$petalos;$i++)
+	    	{
+	    		array_pop($this->n_petalos);
+	    	}
 	    }
 
 	    function regar_flor($altura){

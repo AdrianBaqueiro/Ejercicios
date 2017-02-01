@@ -1,0 +1,96 @@
+﻿<html>
+<head>
+<title>Tarefa 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="estilos.css">
+<script type="text/javascript" src="../jquery-3.1.1.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+<h2>Rexistro de Usuarios</h2>
+<form name="formulario" id="formulario" method="POST" action="http://seixo.local/jQuery/index.php">
+  <p>Por favor complete o seguinte formulario</p>
+  <fieldset class="login">
+    <legend>Detalles de Acceso </legend>
+    <div>
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" name="usuario">
+    </div>
+    <div>
+      <label for="password">Contrasinal</label>
+      <input type="password" id="password" name="password">
+    </div>
+    <div>
+      <label for="password2">Repetir Contrasinal</label>
+      <input type="password" id="password2" name="password2">
+    </div>
+    <br/>
+    <span id="adicionais">Mais datos >></span>
+  </fieldset>
+  <fieldset class="contact" id="infocontacto">
+    <legend>Detalles do Usuario </legend>
+    <div>
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome">
+    </div>
+    <div>
+      <label for="apelidos">Apelidos</label>
+      <input type="text" id="apelidos" name="apelidos">
+    </div>
+    <div class="radio">
+      <fieldset>
+        <legend><span>Sexo</span></legend>
+        <div>
+          <input type="radio" id="home" name="sexo" value="home">
+          <label for="male">Home</label>
+        </div>
+        <div>
+          <input type="radio" id="muller" name="sexo" value="muller">
+          <label for="female">Muller</label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="data">
+      <fieldset>
+        <legend><span>Data Nacemento</span></legend>
+        <div id="divdia">
+          <label for="dia">Dia</label>
+          <select id="dia" name="dia">
+          </select>
+        </div>
+        <div id="divmes">
+          <label for="mes">Mes</label>
+          <select id="mes" name="mes">
+            <option value="1">Xaneiro</option>
+            <option value="2">Febreiro</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Maio</option>
+            <option value="6">Xuño</option>
+            <option value="7">Xullo</option>
+            <option value="8">Agosto</option>
+            <option value="9">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Decembro</option>
+          </select>
+        </div>
+        <div id="divano">
+          <label for="ano">Ano</label>
+          <select id="ano" name="ano">
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" class="email">
+    </div>
+  </fieldset>
+  <div id="mensaxes"></div>
+  <div>
+    <input type="submit">
+  </div>
+</form>
+</body>
+</html>
