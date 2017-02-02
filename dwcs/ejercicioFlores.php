@@ -542,22 +542,4 @@ $_SESSION['xardins'] = serialize($xardins);
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
