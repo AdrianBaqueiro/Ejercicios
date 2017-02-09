@@ -5,12 +5,12 @@ include "menuBar/menuBar.php";
 include "menuBar/userBar.php";
 	//listar ficheros
 	$lista;
-	if ($handle = opendir('.')) 
+	if ($handle = opendir('.'))
 	{
 
-	    while (false !== ($entry = readdir($handle))) 
+	    while (false !== ($entry = readdir($handle)))
 	    {
-	        if ($entry != "." && $entry != "..") 
+	        if ($entry != "." && $entry != "..")
 	        {
 	        	$lista[] = $entry;
 	            //echo "$entry\n";
@@ -18,6 +18,7 @@ include "menuBar/userBar.php";
    		}
     closedir($handle);
 	}
+
 
 	//Mostrar($lista);
 	$user = $_SESSION['user'];
