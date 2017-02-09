@@ -77,6 +77,42 @@ function crearSelectNum($name,$num,$selNum){
   ');
 
 }
+function crearSelectTipo($value){
+  print('
+      <span class="input-group-addon">Tipo</span>
+      <select name="tipo'.$value.'" class="form-control">
+        <option value="int" >Integer</option>
+        <option value="char" >VarChar</option>
+        <option value="text" >Text</option>
+        <option value="date" >Date</option>
+      </select>
+
+  ');
+
+}
+function crearSelectDB($id,$consulta,$tablaSl){
+  print('
+    <div  class="input-group">
+      <span class="input-group-addon">Tablas</span>
+      <select name="'.$id.'" class="form-control" onChange="this.form.submit()" >
+');
+    while ($fieldinfo = mysqli_fetch_row($consulta))
+    {
+      if($tablaSl == $fieldinfo[0])
+        echo "<option value='{$fieldinfo[0]}' selected>{$fieldinfo[0]}</option>";
+      else {
+          echo "<option value='{$fieldinfo[0]}'>{$fieldinfo[0]}</option>";
+      }
+    }
+
+print('
+      </select>
+      </div>
+  ');
+
+
+
+}
 
 
 

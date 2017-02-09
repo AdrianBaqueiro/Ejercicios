@@ -13,6 +13,7 @@
  *
  * Date: Wed Feb 23 13:55:29 2011 -0500
  */
+
 $(document).ready(function() {
   $("#dia").each(function()
   {
@@ -25,11 +26,32 @@ $(document).ready(function() {
   $("#ano").each(function()
   {
     for(i= new Date().getFullYear(),e=0;e<=100;i--,e++)
-    { ;
+    {
       $(this).append ( "<option value="+i+">"+i+"</option>");
     }
 
   })
-  $("fieldset").setAttribute = "display=none";
+  $("#infocontacto").addClass("ocultar");
+  $("div.data").children().children().next().next().addClass("ocultar");
+  $("#adicionais").addClass("pointer");
+  $("#adicionais").click(function(){
+
+    $("#infocontacto").toggle(300);
+
+    if(this.innerText == "Menos datos >>")
+    {
+      this.innerText = "Mais datos >>";
+      $("#usuario").focus();
+    }
+    else {
+      this.innerText = "Menos datos >>";
+      $("#nome").focus();
+    }
+  });
+  $("#divdia").click(function(){
+
+    
+  });
+
 
 });

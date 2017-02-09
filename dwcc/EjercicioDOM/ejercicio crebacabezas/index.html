@@ -7,9 +7,17 @@
 		<meta charset="utf-8">
 		<LINK href="style.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="script.js"></script>
+		<link  rel="stylesheet" type="text/css"  href="bootstrap-3.3.7-dist\css\bootstrap.css">
+		<script src="bootstrap-3.3.7-dist\jq\jquery-3.1.1.js"></script>
+		<script src="bootstrap-3.3.7-dist\js\bootstrap.min.js"></script>
 	</head>
 	<body id="body">
 		<div id="tabla"></div>
-		<input type="button" value="desordenar" onclick="desordenar()"/>
+		<div>
+			<input class="btn" type="button" value="inicio" onclick="desordenarI()"/>
+			<input class="btn" type="button" value="pausa" onclick="pausar()"/>
+			<input class="btn" type="button" value="continuar" onclick="continuar()"/>
+			<p  id="cont"></p>
+		</div>
 	</body>
 </html>

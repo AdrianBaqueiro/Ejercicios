@@ -1,6 +1,8 @@
 <?php
+$debug;
 
 function connectDB($server,$user,$pass,$db){
+   global $debug;
   if($db == null)
   {
       $mysqli = new mysqli($server,$user,$pass) or die("error");
@@ -8,17 +10,18 @@ function connectDB($server,$user,$pass,$db){
   }else {
       $mysqli = new mysqli($server,$user,$pass,$db) or die("error");
   }
-  echo "<p>conexion establecida con la base de datos</p>";
+  $debug = "<p>conexion establecida con la base de datos</p>";
   return $mysqli;
 }
 
 function crearDB($con,$nameDB){
+   global $debug;
   try{
     $query = "Create DATABASE ".$nameDB;
     if($con->query($query) === true)
-      echo "<p>Base de datos creada</p>";
+        $debug =  "<p>Base de datos creada</p>";
       else {
-        echo "<p>Error al crear la base de datos</p>";
+        $debug = "<p>Error al crear la base de datos</p>";
       }
   }catch(Exception $e)
   {
@@ -27,8 +30,14 @@ function crearDB($con,$nameDB){
 }
 function consultaDB($con,$query)
 {
-
-  $con->query($query);
+  $e;
+  try{
+  $e =  $con->query($query);
+  return $e;
+  }catch(Exception $e)
+  {
+    return $e;
+  }
 
 }
 
