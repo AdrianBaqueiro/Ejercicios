@@ -10,13 +10,12 @@ $auxT;
 $arrayC;
 $arrayT;
 
-
 $tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
 $cor = isset($_POST['cor']) ? $_POST['cor']: null;
 $numPetalos = isset($_POST['numPetalos']) ? $_POST['numPetalos']: null;
 $submit = isset($_POST['submit']) ? $_POST['submit']: null;
 $selNum = isset($_POST['Columnas']) ? $_POST['Columnas']: null;
-$tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: null;
+$tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: $_SESSION['tablaSl'];
 
 
 
@@ -50,9 +49,9 @@ if($submit == null)
 if(isset($_POST['crearTabla']) && $_POST['NombreTabla'] != "" && $_POST['columna0'] != ""){
   crearTabla($con);
 }
-if(isset($_POST['consulta']))
+if(isset($_POST['insertar']))
 {
-  verConsulta($con);
+  insertarTabla($con,$tablaSl);
 }
 
 var_dump($_POST);
@@ -85,12 +84,15 @@ switch ($submit) {
     formF("crearTabla");
     break;
   case 'ConsultaSQL':
+
     formI("InsertarFilas","TablasDB.php");
     echo '<input type="hidden" name="insertar" />';
     $sql = " SHOW TABLES FROM alumnos";
     $result =  consultaDB($con,$sql);
     crearSelectDB("tablaSl",$result,$tablaSl);
+    verConsulta($con,$tablaSl);
     formF("insertar");
+
     break;
   case 'VerDB':
     formI("VerDB","TablasDB.php");
@@ -131,7 +133,12 @@ function crearTabla($con){
     }
     if($key == "tipo".$auxT)
     {
-      $arrayT[$auxT] = $value;
+      if($value == "VarChar")
+      {
+          $arrayT[$auxT] = $value."(100)";
+      }else{
+          $arrayT[$auxT] = $value;
+      }
       $auxT++;
     }
   }
@@ -152,23 +159,49 @@ $sql = "create table ".$_POST['NombreTabla']." ( ";
 echo $error;
 }
 
-function verConsulta($con){
+function verConsulta($con,$tablaSl){
 
-  $nombre = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
-  $sql = " SHOW COLUMNS FROM ".$nombre;
-
+  $sql = " SHOW COLUMNS FROM ".$tablaSl;
   $result =  consultaDB($con,$sql);
-
-  //var_dump( $mensaje);
-//  $row = mysqli_fetch_array($mensaje, MYSQLI_NUM);
-  //printf ("%s (%s)\n", $row[0], $row[1]);
-  //var_dump( $row );
 
   while ($fieldinfo = mysqli_fetch_row($result))
   {
-    echo "Tabla: {$fieldinfo[0]}\n";
-
+      createInput($fieldinfo[0]);
   }
+}
+function insertarTabla($con,$tablaSl)
+{
+  $sql = " SHOW COLUMNS FROM ".$tablaSl;
+  $result =  consultaDB($con,$sql);
+  $aux=0;
+  $array = array();
+  $values = "";
+
+  while ($fieldinfo = mysqli_fetch_row($result))
+  {
+    foreach ($_POST as $key => $value) {
+      if($key == $fieldinfo[0])
+        $array[$aux] = $value;
+    }
+    $aux++;
+  }
+  for($i=0;$i<count($array);$i++)
+  {
+    if($i === (count($array)-1))
+    {
+      $values = $values."'".$array[$i]."'";
+    }else {
+      $values = $values."'".$array[$i]."', ";
+    }
+  }
+
+  $sql =  "INSERT INTO ".$tablaSl." VALUES (".$values.") " ;
+  var_dump($sql);
+  $result = consultaDB($con,$sql);
+  echo $result;
+
+
+
 
 }
 
