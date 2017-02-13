@@ -53,6 +53,10 @@ if(isset($_POST['insertar']))
 {
   insertarTabla($con,$tablaSl);
 }
+if(isset($_POST['tabla']))
+{
+  verDatosTabla($con,$tablaSl);
+}
 
 var_dump($_POST);
 
@@ -73,10 +77,11 @@ switch ($submit) {
     crearSelectNum("Columnas",10,$selNum);
     for($i=0;$i<$selNum;$i++)
     {
-      echo
-      "<div  class='input-group'>
+      echo "
+      <div  class='input-group'>
         <span class='input-group-addon'>Columna".$i."</span>
-        <input type='text' name='columna".$i."' class='form-control'  required />";
+        <input type='text' name='columna".$i."' class='form-control'  required />
+        ";
         crearSelectTipo($i);
 
         echo  "</div>";
@@ -90,18 +95,21 @@ switch ($submit) {
     $sql = " SHOW TABLES FROM alumnos";
     $result =  consultaDB($con,$sql);
     crearSelectDB("tablaSl",$result,$tablaSl);
-    verConsulta($con,$tablaSl);
+    verColumnas($con,$tablaSl);
     formF("insertar");
-
     break;
+
   case 'VerDB':
     formI("VerDB","TablasDB.php");
-    createInput("DB");
-    formF("DB");
+    echo '<input type="hidden" name="tabla" />';
+    $sql = " SHOW TABLES FROM alumnos";
+    $result =  consultaDB($con,$sql);
+    crearSelectDB("tablaSl",$result,$tablaSl);
+    formF("Tabla");
     break;
 
   default:
-    # code...
+
     break;
 }
 
@@ -159,7 +167,7 @@ $sql = "create table ".$_POST['NombreTabla']." ( ";
 echo $error;
 }
 
-function verConsulta($con,$tablaSl){
+function verColumnas($con,$tablaSl){
 
   $sql = " SHOW COLUMNS FROM ".$tablaSl;
   $result =  consultaDB($con,$sql);
@@ -169,6 +177,7 @@ function verConsulta($con,$tablaSl){
       createInput($fieldinfo[0]);
   }
 }
+
 function insertarTabla($con,$tablaSl)
 {
   $sql = " SHOW COLUMNS FROM ".$tablaSl;
@@ -200,11 +209,30 @@ function insertarTabla($con,$tablaSl)
   $result = consultaDB($con,$sql);
   echo $result;
 
-
-
-
 }
 
+function verDatosTabla($con,$tablaSl){
+
+  $sql = " SHOW COLUMNS FROM ".$tablaSl;
+  $result =  consultaDB($con,$sql);
+  $arrayC = array();
+  $aux=0;
+  while ($fieldinfo = mysqli_fetch_row($result))
+  {
+      $arrayC[$aux] = $fieldinfo[0];
+      $aux++;
+  }
+
+  $sql = " select * FROM ".$tablaSl;
+  $result =  consultaDB($con,$sql);
+
+   while ($fieldinfo = mysqli_fetch_array($result))
+  {
+    for($i=0;$i<$aux;$i++){
+      echo $fieldinfo[$arrayC[$i]]."</br>";
+    }
+  }
+}
 
 
 
