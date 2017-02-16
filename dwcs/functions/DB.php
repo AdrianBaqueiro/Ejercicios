@@ -8,7 +8,7 @@ function connectDB($server,$user,$pass,$db){
       $mysqli = new mysqli($server,$user,$pass) or die("error");
 
   }else {
-      $mysqli = new mysqli($server,$user,$pass,$db) or die("error");
+      $mysqli = new mysqli($server,$user,$pass,$db) or die("error".mysql_error());
   }
   $debug = "<p>conexion establecida con la base de datos</p>";
   return $mysqli;
@@ -21,11 +21,12 @@ function crearDB($con,$nameDB){
     if($con->query($query) === true)
         $debug =  "<p>Base de datos creada</p>";
       else {
-        $debug = "<p>Error al crear la base de datos</p>";
+        $debug = "<p>Error al crear la base de datos</p>".mysql_error();
       }
+      return $debug;
   }catch(Exception $e)
   {
-      echo $e;
+      return $e;
   }
 }
 function consultaDB($con,$query)

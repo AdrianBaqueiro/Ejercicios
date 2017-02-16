@@ -77,6 +77,49 @@ function crearSelectNum($name,$num,$selNum){
   ');
 
 }
+function crearSelectNumNoChange($name,$num){
+  print('
+    <div  class="input-group">
+    <span class="input-group-addon">'.$name.'</span>
+      <select name="'.$name.'" class="form-control">
+  ');
+          for($i=1;$i<=$num;$i++)
+          {
+
+            if($i < 10)
+              echo "<option value=".$i." >0".$i."</option>";
+              else {
+                echo "<option value=".$i." >".$i."</option>";
+              }
+          }
+  print('
+      </select>
+    </div>
+
+  ');
+
+}
+function crearSelectNumYear($name,$num){
+  print('
+    <div  class="input-group">
+    <span class="input-group-addon">'.$name.'</span>
+      <select name="'.$name.'" class="form-control">
+  ');
+          for($i=$num;$i>=1900;$i--)
+          {
+            if($i == $selNum)
+              echo "<option value=".$i." selected>".$i."</option>";
+              else {
+                echo "<option value=".$i." >".$i."</option>";
+              }
+          }
+  print('
+      </select>
+    </div>
+
+  ');
+
+}
 function crearSelectTipo($value){
   print('
       <span class="input-group-addon">Tipo</span>
@@ -110,14 +153,15 @@ print('
       </div>
   ');
 
-
-
 }
 
+function createInputDate($name){
+  print('
+      <div  class="input-group">
+        <span class="input-group-addon">'.$name.'</span>
+        <input type="date" name="'.$name.'" class="form-control"  />
+      </div>
+  ');
 
-
-
-
-
-
+}
  ?>
