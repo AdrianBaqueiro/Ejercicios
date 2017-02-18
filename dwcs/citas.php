@@ -2,6 +2,10 @@
 include('functions/DB.php');
 include('functions/html.php');
 include('functions/interface.php');
+include('clases/cita.php');
+include('clases/usuario.php');
+include('clases/servicio.php');
+
 session_start();
 
 $con;
@@ -11,33 +15,43 @@ $arrayC;
 $arrayT;
 
 $tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
-$cor = isset($_POST['cor']) ? $_POST['cor']: null;
-$numPetalos = isset($_POST['numPetalos']) ? $_POST['numPetalos']: null;
 $submit = isset($_POST['submit']) ? $_POST['submit']: null;
 $selNum = isset($_POST['Columnas']) ? $_POST['Columnas']: null;
 $tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: $_SESSION['tablaSl'];
 
 
+$con = connectDB('localhost','root','',null);
+crearDB($con,"Citas");
+$con = connectDB('localhost','root','','Citas');
+$sql = "CREATE TABLE IF NOT EXISTS usuario (
+  id text not null,
+  password text,
+  tipo text,
+  nome text,
+  apelido1 text,
+  apelido2 text,
+  telefono int,
+  primary key(id)
+  )
+  ";
+consultaDB($con,$sql);
+$sql = "CREATE TABLE IF NOT EXISTS cita (
+  id int not null auto_increment,
+  id_cliente text,
+  id_empregado text,
+  fecha text,
+  servicio text,
+  primary key(id))
+  ";
 
-$con = connectDB('localhost','root','',"alumnos");
-
-//echo $debug;
-
-if($selNum == null)
-{
-  if(isset($_SESSION['selNum']))
-    $selNum = $_SESSION['selNum'];
-  else
-    $selNum = 1;
-}
-if($tablaSl == null)
-{
-  if(isset($_SESSION['$tablaSl']))
-    $tablaSl = $_SESSION['$tablaSl'];
-  else
-    $tablaSl = 1;
-}
-
+consultaDB($con,$sql);
+$sql = "CREATE TABLE IF NOT EXISTS servicio (
+  id int not null auto_increment,
+  nome text,
+  precio int,
+  primary key(id))
+  ";
+consultaDB($con,$sql);
 
 if($submit == null)
 {
@@ -46,61 +60,71 @@ if($submit == null)
   else
     $submit = "default";
 }
-if(isset($_POST['crearTabla']) && $_POST['NombreTabla'] != "" && $_POST['columna0'] != ""){
-  crearTabla($con);
-}
-if(isset($_POST['insertar']))
-{
-  insertarTabla($con,$tablaSl);
-}
-if(isset($_POST['tabla']))
-{
-  verDatosTabla($con,$tablaSl);
-}
 
+//echo $debug;
 var_dump($_POST);
 
-openHTML("TablasDB");
-menuBarI("TablasDB","TablasDB.php");
-menuItems("CrearTabla");
-menuItems("ConsultaSQL");
-menuItems("VerDB");
+openHTML("Citas");
+menuBarI("Citas","citas.php");
+menuItems("Alta");
+menuItems("Login");
+menuItems("Cita");
+menuItems("VerCitas");
+
+
 menuBarF();
 
 
 
 switch ($submit) {
-  case 'CrearTabla':
-    formI("CrearTabla","TablasDB.php");
-    echo '<input type="hidden" name="crearTabla" />';
-    createInput("NombreTabla");
-    crearSelectNum("Columnas",10,$selNum);
-    for($i=0;$i<$selNum;$i++)
-    {
-      echo "
-      <div  class='input-group'>
-        <span class='input-group-addon'>Columna".$i."</span>
-        <input type='text' name='columna".$i."' class='form-control'  required />
-        ";
-        crearSelectTipo($i);
-
-        echo  "</div>";
-    }
-    formF("crearTabla");
+  case 'Alta':
+    formI("Alta usuarios","citas.php");
+    echo '<input type="hidden" name="alta" />';
+    createInput("Nombre");
+    createInput("Primer Apellido");
+    createInput("Segundo Apellido");
+    createInput("Telefono");
+    print('
+    <div class="input-group">
+      <span class="input-group-addon">Tipo</span>
+      <select name="tipo" class="form-control">
+        <option value="cliente" >Cliente</option>
+        <option value="empregado" >Empregado</option>
+      </select>
+    </div>
+    ');
+    formF("Dar alta");
     break;
-  case 'ConsultaSQL':
+  case 'Cita':
 
-    formI("InsertarFilas","TablasDB.php");
-    echo '<input type="hidden" name="insertar" />';
+    formI("Cita","citas.php");
+    echo '<input type="hidden" name="cita" />';
+    crearSelectNumNoChange("dia",30);
+    crearSelectNumNoChange("mes",12);
+    crearSelectNumYear("año",2017);
+    print('
+    <div class="input-group">
+      <span class="input-group-addon">Servicio</span>
+      <select name="servicio" class="form-control">
+        <option value="cliente" >Cliente</option>
+        <option value="empregado" >Empregado</option>
+      </select>
+    </div>
+    ');
+    formF("Generar");
+    break;
+
+  case 'VerCitas':
+    formI("VerDB","TablasDB.php");
+    echo '<input type="hidden" name="tabla" />';
     $sql = " SHOW TABLES FROM alumnos";
     $result =  consultaDB($con,$sql);
     crearSelectDB("tablaSl",$result,$tablaSl);
-    verColumnas($con,$tablaSl);
-    formF("insertar");
+    formF("Tabla");
     break;
 
-  case 'VerDB':
-    formI("VerDB","TablasDB.php");
+  case 'Login':
+    formI("Login","citas.php");
     echo '<input type="hidden" name="tabla" />';
     $sql = " SHOW TABLES FROM alumnos";
     $result =  consultaDB($con,$sql);
@@ -217,7 +241,7 @@ function verDatosTabla($con,$tablaSl){
   $result =  consultaDB($con,$sql);
   $arrayC = array();
   $aux=0;
-  
+
   while ($fieldinfo = mysqli_fetch_row($result))
   {
       $arrayC[$aux] = $fieldinfo[0];
