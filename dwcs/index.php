@@ -37,6 +37,7 @@ include 'funciones.php';
  		<script src="..\bootstrap-3.3.7-dist\js\bootstrap.min.js"></script>
 	</head>
 	<body>
+		<div class="titulo"><h1>Ejercicios DWCS </h1></div>
 		<div class="ejercicios container">
 			<div class="row">
 				<?php QuitarPHP($lista) ?>
