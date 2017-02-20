@@ -124,7 +124,7 @@ function comprobarNum(num,numeros){
 function generarImg(){
 	for(i=1,e=1;i<=18;i++)
 	{
-		photos[i] = "img/baraja/img"+e+".png";
+		photos[i] = "img/baraja/img"+e+".PNG";
 		if(i%2==0)
 			e++;
 	}
