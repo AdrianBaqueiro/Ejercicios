@@ -19,9 +19,9 @@ function crearDB($con,$nameDB){
   try{
     $query = "Create DATABASE ".$nameDB;
     if($con->query($query) === true)
-        $debug =  "<p>Base de datos creada</p>";
+        $debug =  true;
       else {
-        $debug = "<p>Error al crear la base de datos</p>".mysql_error();
+       $debug = false;
       }
       return $debug;
   }catch(Exception $e)
@@ -34,10 +34,10 @@ function consultaDB($con,$query)
   $e;
   try{
   $e =  $con->query($query);
-  return $e;
+  return $e.mysqli_error($con);
   }catch(Exception $e)
   {
-    return $e;
+    return $e.mysqli_error($con);
   }
 
 }

@@ -21,45 +21,57 @@ $tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: $_SESSION['tablaSl'];
 
 
 $con = connectDB('localhost','root','',null);
-crearDB($con,"Citas");
-$con = connectDB('localhost','root','','Citas');
-$sql = "CREATE TABLE IF NOT EXISTS usuario (
-  id text not null,
-  password text,
-  tipo text,
-  nome text,
-  apelido1 text,
-  apelido2 text,
-  telefono int,
-  primary key(id)
-  )
-  ";
-consultaDB($con,$sql);
-$sql = "CREATE TABLE IF NOT EXISTS cita (
-  id int not null auto_increment,
-  id_cliente text,
-  id_empregado text,
-  fecha text,
-  servicio text,
-  primary key(id))
-  ";
-
-consultaDB($con,$sql);
-$sql = "CREATE TABLE IF NOT EXISTS servicio (
-  id int not null auto_increment,
-  nome text,
-  precio int,
-  primary key(id))
-  ";
-consultaDB($con,$sql);
-
-if($submit == null)
+if(crearDB($con,"Citas"))
 {
-  if(isset($_SESSION['submit']))
-    $submit = $_SESSION['submit'];
-  else
-    $submit = "default";
-}
+  $con = connectDB('localhost','root','','Citas');
+  $sql = "CREATE TABLE IF NOT EXISTS usuario (
+    id VarChar(100) not null,
+    password text,
+    tipo text,
+    nome text,
+    apelido1 text,
+    apelido2 text,
+    telefono int,
+    primary key(id)
+    )
+    ";
+    consultaDB($con,$sql);
+    $sql = "CREATE TABLE IF NOT EXISTS servicio (
+      id int not null auto_increment,
+      nome text,
+      precio int,
+      primary key(id))
+      ";
+    consultaDB($con,$sql);
+
+  $sql = "CREATE TABLE IF NOT EXISTS cita (
+    id int not null auto_increment,
+    id_cliente VarChar(100),
+    id_empregado VarChar(100),
+    fecha text,
+    servicio int,
+    primary key(id),
+    FOREIGN KEY (id_empregado) REFERENCES usuario(id),
+    FOREIGN KEY (id_cliente) REFERENCES usuario(id),
+    FOREIGN KEY (servicio) REFERENCES servicio(id)
+    )
+    ";
+  consultaDB($con,$sql);
+  mysqli_close($con);
+  }
+
+
+  if($submit == null)
+  {
+    if(isset($_SESSION['submit']))
+      $submit = $_SESSION['submit'];
+    else
+      $submit = "default";
+  }
+
+
+$con = connectDB('localhost','root','','Citas');
+
 
 //echo $debug;
 var_dump($_POST);
