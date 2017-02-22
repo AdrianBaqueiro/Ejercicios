@@ -21,6 +21,7 @@ $tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: $_SESSION['tablaSl'];
 
 
 $con = connectDB('localhost','root','',null);
+//if para crear la base de datos y las tablas correspondientes.
 if(crearDB($con,"Citas"))
 {
   $con = connectDB('localhost','root','','Citas');
@@ -59,8 +60,9 @@ if(crearDB($con,"Citas"))
   consultaDB($con,$sql);
   mysqli_close($con);
   }
+  $con = connectDB('localhost','root','','Citas');
 
-
+  //if funciones relacionadas con los submits
   if($submit == null)
   {
     if(isset($_SESSION['submit']))
@@ -68,9 +70,15 @@ if(crearDB($con,"Citas"))
     else
       $submit = "default";
   }
+  if(isset($_POST['alta']))
+  {
+    altaUsuario($con);
+  }
 
 
-$con = connectDB('localhost','root','','Citas');
+
+
+
 
 
 //echo $debug;
@@ -87,11 +95,12 @@ menuItems("VerCitas");
 menuBarF();
 
 
-
 switch ($submit) {
   case 'Alta':
     formI("Alta usuarios","citas.php");
     echo '<input type="hidden" name="alta" />';
+    createInput("Usuario");
+    createInputP("Contraseña");
     createInput("Nombre");
     createInput("Primer Apellido");
     createInput("Segundo Apellido");
@@ -159,116 +168,26 @@ $_SESSION['tablaSl'] = $tablaSl;
 
  //crearDB($con,"persona2");
 
+function altaUsuario($con){
 
+  $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
+  $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
+  $nome = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
+  $ape1 = isset($_POST['Primer_Apellido']) ? $_POST['Primer_Apellido'] : null;
+  $ape2 = isset($_POST['Segundo_Apellido']) ? $_POST['Segundo_Apellido'] : null;
+  $tlf = isset($_POST['Telefono']) ? $_POST['Telefono'] : null;
+  $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : null;
 
-function crearTabla($con){
-  $auxC = 0;
-  $auxT = 0;
-  $arrayC = Array();
-  $arrayT = Array();
+  $usuario  =  new Usuario($id,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+  $sql = sprintf(
+  "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
+  VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
+  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s')",
+  $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
 
-
-
-  foreach ($_POST as $key => $value) {
-    if($key == "columna".$auxC)
-    {
-      $arrayC[$auxC] = $value;
-      $auxC++;
-    }
-    if($key == "tipo".$auxT)
-    {
-      if($value == "VarChar")
-      {
-          $arrayT[$auxT] = $value."(100)";
-      }else{
-          $arrayT[$auxT] = $value;
-      }
-      $auxT++;
-    }
-  }
-$sql = "create table ".$_POST['NombreTabla']." ( ";
-
-  for($i=0;$i<count($arrayC);$i++)
-  {
-
-    if($i== (count($arrayC)-1))
-    {
-        $sql = $sql.$arrayC[$i]." ".$arrayT[$i]." )";
-    }else {
-      $sql = $sql.$arrayC[$i]." ".$arrayT[$i].", ";
-    }
-  }
-
-  $error = consultaDB($con,$sql);
-echo $error;
+  mysqli_query($con, $sql);
+  echo mysqli_error($con);
 }
 
-function verColumnas($con,$tablaSl){
-
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-
-  while ($fieldinfo = mysqli_fetch_row($result))
-  {
-      createInput($fieldinfo[0]);
-  }
-}
-
-function insertarTabla($con,$tablaSl)
-{
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-  $aux=0;
-  $array = array();
-  $values = "";
-
-  while ($fieldinfo = mysqli_fetch_row($result))
-  {
-    foreach ($_POST as $key => $value) {
-      if($key == $fieldinfo[0])
-        $array[$aux] = $value;
-    }
-    $aux++;
-  }
-  for($i=0;$i<count($array);$i++)
-  {
-    if($i === (count($array)-1))
-    {
-      $values = $values."'".$array[$i]."'";
-    }else {
-      $values = $values."'".$array[$i]."', ";
-    }
-  }
-
-  $sql =  "INSERT INTO ".$tablaSl." VALUES (".$values.") " ;
-  var_dump($sql);
-  $result = consultaDB($con,$sql);
-  echo $result;
-
-}
-
-function verDatosTabla($con,$tablaSl){
-
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-  $arrayC = array();
-  $aux=0;
-
-  while ($fieldinfo = mysqli_fetch_row($result))
-  {
-      $arrayC[$aux] = $fieldinfo[0];
-      $aux++;
-  }
-
-  $sql = " select * FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-
-   while ($fieldinfo = mysqli_fetch_array($result))
-  {
-    for($i=0;$i<$aux;$i++){
-      echo $fieldinfo[$arrayC[$i]]."</br>";
-    }
-  }
-}
 
  ?>

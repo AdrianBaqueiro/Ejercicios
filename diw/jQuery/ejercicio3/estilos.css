@@ -50,7 +50,7 @@ input {
 input:hover, input:focus {
 	border-color:#666;
 	background:#D2E4F9;
-}
+} 
 
 .correctos{
 		background:#6F6;
@@ -133,10 +133,4 @@ input[type=submit]{
 }
 .contact .data fieldset {
 	color: #0B77B7;
-}
-.ocultar{
-	display: none;
-}
-.pointer{
-cursor :	pointer;
 }

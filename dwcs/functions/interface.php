@@ -41,6 +41,14 @@
 				</div>
     ');
   }
+  function createInputP($name){
+    print('
+        <div  class="input-group">
+          <span class="input-group-addon">'.$name.'</span>
+          <input type="password" name="'.$name.'" class="form-control"  />
+        </div>
+    ');
+  }
 function formI($title,$file){
   print('<form method="POST"  class="well"  action="'.$file.'">
       <h2>'.$title.'</h2>

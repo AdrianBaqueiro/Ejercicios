@@ -1,0 +1,44 @@
+--------------- Instruccións para a tarefa 4 --------------- 
+
+ATENCIÓN: Non vale modificar atributos ou ID no codigo HTML orixinal.
+---------------------------------------------------------------- 
+As táboas necesarias para o exercicio están no arquivo incidencias.sql
+Crear unha base de datos, usuario e contrasinal e importar nela o arquivo incidencias.sql.
+
+Para acceder á aplicación empregar: 
+usuario: 	admin
+Password: 	hola
+
+1.- Cubrir os datos do arquivo conexion.php
+
+2.- No arquivo acceder.php programar que cando pulsemos o boton de Acceder faga unha petición Ajax á páxina
+    acceder.php e se nos devolve como resultado da petición o texto "concedido" que nos conecte empregando Javascript coa páxina index.php ou ben amose unha alerta có texto "Datos de Acceso Incorrectos".
+
+3.- No arquivo encargados.php realizar as seguintes tarefas:
+
+// Cargar no div #central o arquivo listadoencargados.php.
+// Cando remata de cargar o arquivo programar que cando fagamos click  en "borrar" (situado na columna de edición)
+// que nos pregunte si queremos borrar ese rexistro. 
+
+// Si é así, borrar o rexistro na táboa empregando AJAX, e eliminar a fila da táboa cun efecto de difuminado.
+	
+// Nota: Para poder borrar ese rexistro necesitaredes saber cal é o código a borrar do rexistro que queremos borrar, 
+// xa que na solicitude AJAX temos que pasarlle dito código.
+
+/* solicitude Ajax: URL: borrar.php
+   Datos a enviar na solicitude AJAX:
+	idencargado: Hai que pasarlle o ID da estancia correspondente á fila onde fixemos click.
+	tabla: 'encargados'
+   Cando remata a petición AJAX si o resultado é "borrado", fai un difuminado da fila e a continuación elimina a fila da táboa visible.
+*/
+
+// E programar tamén nesta mesma páxina encargados.php:
+// Si pulsamos no enlace #altaencargados cargará no contenedor #central o arquivo altaenc.php
+
+
+4.- Programar o arquivo listadoestancias.php. Neste listado amosar os campos: ID. Estancia | Nome Estancia | Acrónimo | Num. Equipos. | Num. Impresora, ordenado por ID. Podedes ver como está feito listadoencargados.php para ter un modelo.
+
+5.- Programar no arquivo estancias.php que cando o documento esté preparado, cargue no contenedor #central o arquivo listadoestancias.php. 
+
+------------------------------------------------------------------------
+Unha vez feito o exercicio comprimir nun .zip e envia-los arquivos á plataforma.
