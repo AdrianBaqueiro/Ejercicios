@@ -59,7 +59,7 @@ if(crearDB($con,"Citas"))
     ";
   consultaDB($con,$sql);
   mysqli_close($con);
-  }
+}
   $con = connectDB('localhost','root','','Citas');
 
   //if funciones relacionadas con los submits
@@ -82,7 +82,7 @@ if(crearDB($con,"Citas"))
 
 
 //echo $debug;
-var_dump($_POST);
+//var_dump($_POST);
 
 openHTML("Citas");
 menuBarI("Citas","citas.php");
@@ -146,11 +146,10 @@ switch ($submit) {
 
   case 'Login':
     formI("Login","citas.php");
-    echo '<input type="hidden" name="tabla" />';
-    $sql = " SHOW TABLES FROM alumnos";
-    $result =  consultaDB($con,$sql);
-    crearSelectDB("tablaSl",$result,$tablaSl);
-    formF("Tabla");
+    echo '<input type="hidden" name="login" />';
+    createInput("Usuario");
+    createInputP("Contraseña");
+    formF("Login");
     break;
 
   default:
@@ -181,9 +180,10 @@ function altaUsuario($con){
   $usuario  =  new Usuario($id,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
   $sql = sprintf(
   "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
-  VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
-  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s')",
+  VALUES ('%s','%s','%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE
+  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s'",
   $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+
 
   mysqli_query($con, $sql);
   echo mysqli_error($con);

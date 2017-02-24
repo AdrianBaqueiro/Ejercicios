@@ -277,29 +277,97 @@ function moverCaballoN(ficha) {
 		pos2.appendChild(pos1.children[0]);
 		pos2p = pos2.setAttribute("hayFicha","true");
 		pos1p = pos1.setAttribute("hayFicha","false");
-		pos2.setAttribute("ficha","blanca");
+		pos2.setAttribute("ficha","negra");
 		pos1.setAttribute("ficha","");
 	}else
-		if((pos1p -	pos2p  == +9) && pos2.getAttribute("ficha")=="negra")
+		if((pos1p -	pos2p  == -6) )
 		{
-			pos2.removeChild(pos2.firstChild);
 			pos2.appendChild(pos1.children[0]);
-			pos2.setAttribute("hayFicha","true");
-			pos2.setAttribute("ficha","blanca");
+			pos2p = pos2.setAttribute("hayFicha","true");
+			pos1p = pos1.setAttribute("hayFicha","false");
+			pos2.setAttribute("ficha","negra");
 			pos1.setAttribute("ficha","");
-			pos1.setAttribute("hayFicha","false");
 		}else
-			if((pos1p -	pos2p  == +7) && pos2.getAttribute("ficha")=="negra")
+			if((pos1p -	pos2p  == -9))
 			{
 
-				pos2.removeChild(pos2.firstChild);
 				pos2.appendChild(pos1.children[0]);
-				pos2.setAttribute("hayFicha","true");
-				pos2.setAttribute("ficha","blanca");
+				pos2p = pos2.setAttribute("hayFicha","true");
+				pos1p = pos1.setAttribute("hayFicha","false");
+				pos2.setAttribute("ficha","negra");
 				pos1.setAttribute("ficha","");
-				pos1.setAttribute("hayFicha","false");
 
-			}
+			}else
+				if((pos1p -	pos2p  == 17))
+				{
+
+					pos2.appendChild(pos1.children[0]);
+					pos2p = pos2.setAttribute("hayFicha","true");
+					pos1p = pos1.setAttribute("hayFicha","false");
+					pos2.setAttribute("ficha","negra");
+					pos1.setAttribute("ficha","");
+
+				}else
+					if((pos1p -	pos2p  == -17))
+					{
+
+						pos2.appendChild(pos1.children[0]);
+						pos2p = pos2.setAttribute("hayFicha","true");
+						pos1p = pos1.setAttribute("hayFicha","false");
+						pos2.setAttribute("ficha","negra");
+						pos1.setAttribute("ficha","");
+
+					}else
+						if((pos1p -	pos2p  == -15))
+						{
+
+							pos2.appendChild(pos1.children[0]);
+							pos2p = pos2.setAttribute("hayFicha","true");
+							pos1p = pos1.setAttribute("hayFicha","false");
+							pos2.setAttribute("ficha","negra");
+							pos1.setAttribute("ficha","");
+
+						}else
+							if((pos1p -	pos2p  == -10))
+							{
+
+								pos2.appendChild(pos1.children[0]);
+								pos2p = pos2.setAttribute("hayFicha","true");
+								pos1p = pos1.setAttribute("hayFicha","false");
+								pos2.setAttribute("ficha","negra");
+								pos1.setAttribute("ficha","");
+
+							}else
+								if((pos1p -	pos2p  == 6))
+								{
+
+									pos2.appendChild(pos1.children[0]);
+									pos2p = pos2.setAttribute("hayFicha","true");
+									pos1p = pos1.setAttribute("hayFicha","false");
+									pos2.setAttribute("ficha","negra");
+									pos1.setAttribute("ficha","");
+								}else
+									if((pos1p -	pos2p  == 15))
+									{
+
+										pos2.appendChild(pos1.children[0]);
+										pos2p = pos2.setAttribute("hayFicha","true");
+										pos1p = pos1.setAttribute("hayFicha","false");
+										pos2.setAttribute("ficha","negra");
+										pos1.setAttribute("ficha","");
+									}
+									else
+										if((pos1p -	pos2p  == 10))
+										{
+
+											pos2.appendChild(pos1.children[0]);
+											pos2p = pos2.setAttribute("hayFicha","true");
+											pos1p = pos1.setAttribute("hayFicha","false");
+											pos2.setAttribute("ficha","negra");
+											pos1.setAttribute("ficha","");
+										}
+
+
 
 	borrarMovimiento();
 	pos1 = null;
@@ -311,7 +379,8 @@ function moverCaballoW(ficha) {
 	nodes = document.getElementsByTagName("td");
 	pos2p = pos2.getAttribute("id");
 	pos1p = pos1.getAttribute("id");
-	if((pos1p -	pos2p  == +8))
+	console.log(pos1p -	pos2p);
+	if((pos1p -	pos2p  == -15))
 	{
 		pos2.appendChild(pos1.children[0]);
 		pos2p = pos2.setAttribute("hayFicha","true");
@@ -319,26 +388,94 @@ function moverCaballoW(ficha) {
 		pos2.setAttribute("ficha","blanca");
 		pos1.setAttribute("ficha","");
 	}else
-		if((pos1p -	pos2p  == +9) && pos2.getAttribute("ficha")=="negra")
+		if((pos1p -	pos2p  == -6) )
 		{
-			pos2.removeChild(pos2.firstChild);
 			pos2.appendChild(pos1.children[0]);
-			pos2.setAttribute("hayFicha","true");
+			pos2p = pos2.setAttribute("hayFicha","true");
+			pos1p = pos1.setAttribute("hayFicha","false");
 			pos2.setAttribute("ficha","blanca");
 			pos1.setAttribute("ficha","");
-			pos1.setAttribute("hayFicha","false");
 		}else
-			if((pos1p -	pos2p  == +7) && pos2.getAttribute("ficha")=="negra")
+			if((pos1p -	pos2p  == -9))
 			{
 
-				pos2.removeChild(pos2.firstChild);
 				pos2.appendChild(pos1.children[0]);
-				pos2.setAttribute("hayFicha","true");
+				pos2p = pos2.setAttribute("hayFicha","true");
+				pos1p = pos1.setAttribute("hayFicha","false");
 				pos2.setAttribute("ficha","blanca");
 				pos1.setAttribute("ficha","");
-				pos1.setAttribute("hayFicha","false");
 
-			}
+			}else
+				if((pos1p -	pos2p  == 17))
+				{
+
+					pos2.appendChild(pos1.children[0]);
+					pos2p = pos2.setAttribute("hayFicha","true");
+					pos1p = pos1.setAttribute("hayFicha","false");
+					pos2.setAttribute("ficha","blanca");
+					pos1.setAttribute("ficha","");
+
+				}else
+					if((pos1p -	pos2p  == -17))
+					{
+
+						pos2.appendChild(pos1.children[0]);
+						pos2p = pos2.setAttribute("hayFicha","true");
+						pos1p = pos1.setAttribute("hayFicha","false");
+						pos2.setAttribute("ficha","blanca");
+						pos1.setAttribute("ficha","");
+
+					}else
+						if((pos1p -	pos2p  == -15))
+						{
+
+							pos2.appendChild(pos1.children[0]);
+							pos2p = pos2.setAttribute("hayFicha","true");
+							pos1p = pos1.setAttribute("hayFicha","false");
+							pos2.setAttribute("ficha","blanca");
+							pos1.setAttribute("ficha","");
+
+						}else
+							if((pos1p -	pos2p  == -10))
+							{
+
+								pos2.appendChild(pos1.children[0]);
+								pos2p = pos2.setAttribute("hayFicha","true");
+								pos1p = pos1.setAttribute("hayFicha","false");
+								pos2.setAttribute("ficha","blanca");
+								pos1.setAttribute("ficha","");
+
+							}else
+								if((pos1p -	pos2p  == 6))
+								{
+
+									pos2.appendChild(pos1.children[0]);
+									pos2p = pos2.setAttribute("hayFicha","true");
+									pos1p = pos1.setAttribute("hayFicha","false");
+									pos2.setAttribute("ficha","blanca");
+									pos1.setAttribute("ficha","");
+								}else
+									if((pos1p -	pos2p  == 15))
+									{
+
+										pos2.appendChild(pos1.children[0]);
+										pos2p = pos2.setAttribute("hayFicha","true");
+										pos1p = pos1.setAttribute("hayFicha","false");
+										pos2.setAttribute("ficha","blanca");
+										pos1.setAttribute("ficha","");
+									}
+									else
+										if((pos1p -	pos2p  == 10))
+										{
+
+											pos2.appendChild(pos1.children[0]);
+											pos2p = pos2.setAttribute("hayFicha","true");
+											pos1p = pos1.setAttribute("hayFicha","false");
+											pos2.setAttribute("ficha","blanca");
+											pos1.setAttribute("ficha","");
+										}
+
+
 
 	borrarMovimiento();
 	pos1 = null;
@@ -390,6 +527,9 @@ function movimientos(td){
 				}if(nodes[Number(td.getAttribute("id"))-14].getAttribute("hayFicha") == "false")
 				{
 					nodes[Number(td.getAttribute("id"))-14].className += " select";
+				}if(nodes[Number(td.getAttribute("id"))-16].getAttribute("hayFicha") == "false")
+				{
+					nodes[Number(td.getAttribute("id"))+16].className += " select";
 				}if(nodes[Number(td.getAttribute("id"))-16].getAttribute("hayFicha") == "false")
 				{
 					nodes[Number(td.getAttribute("id"))+16].className += " select";
