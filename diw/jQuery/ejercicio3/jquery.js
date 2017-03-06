@@ -49,9 +49,44 @@ $(document).ready(function() {
     }
   });
   $("#divdia").click(function(){
-
-    
+    $("#divmes").removeClass("ocultar");
+      $("#divmes").click(function(){
+          $("#divano").removeClass("ocultar");
+      });
   });
+  $("#formulario").validate(
+  	{
+  		rules:{
+  			"nome":"required",
+  			"apelidos":"required",
+  			"usuario":"required",
+  			"password":{required:true, password:true},
+  			"password2":{required:true, password:true},
+  			"email":{required:true, email:true},
+  		},
+  		messages:{
+  			"usuario":"Introduzca un usuario, por favor",
+  			"apelidos":"Introduzca sus apellidos",
+  			"nome":"Introduzca su nombre",
+  			"password":"Introduzca una contraseña",
+  			"password2":"Repita la contraseña",
+  			"email":"Introduzca un email valido",
 
+  		},
+  		debug:false,
+  		errorElement:"em",
+  		errorClass:"erros",
+      validClass:"correctos",
+
+      submitHandler: function(form) {
+        if(confirm("Esta seguro?"))
+        {
+          form.submit();
+        }
+      }
+
+
+
+  	});
 
 });

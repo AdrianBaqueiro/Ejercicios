@@ -8,11 +8,15 @@ include('clases/servicio.php');
 
 session_start();
 
+
+
 $con;
 $auxC;
 $auxT;
 $arrayC;
 $arrayT;
+$usuario;
+
 
 $tipo = isset($_POST['tipo']) ? $_POST['tipo']: null;
 $submit = isset($_POST['submit']) ? $_POST['submit']: null;
@@ -20,7 +24,23 @@ $selNum = isset($_POST['Columnas']) ? $_POST['Columnas']: null;
 $tablaSl = isset($_POST['tablaSl']) ? $_POST['tablaSl']: $_SESSION['tablaSl'];
 
 
+if(isset($_SESSION['usuario']))
+{
+  $usuario = unserialize($_SESSION['usuario']);
+}else
+{
+  $usuario = null;
+}
+if(isset($_SESSION['servicios']))
+{
+  $usuario = unserialize($_SESSION['servicios']);
+}else
+{
+  $usuario = null;
+}
+
 $con = connectDB('localhost','root','',null);
+//if para crear la base de datos y las tablas correspondientes, en caso de que no existan
 if(crearDB($con,"Citas"))
 {
   $con = connectDB('localhost','root','','Citas');
@@ -59,8 +79,9 @@ if(crearDB($con,"Citas"))
   consultaDB($con,$sql);
   mysqli_close($con);
   }
+  $con = connectDB('localhost','root','','Citas');
 
-
+  //if funciones relacionadas con los submits
   if($submit == null)
   {
     if(isset($_SESSION['submit']))
@@ -68,9 +89,19 @@ if(crearDB($con,"Citas"))
     else
       $submit = "default";
   }
+  if(isset($_POST['alta']))
+  {
+    altaUsuario($con);
+  }
+  if(isset($_POST['login']))
+  {
+    login($con);
+  }
+  if(isset($_POST['servicio']))
+  {
+    login($con);
+  }
 
-
-$con = connectDB('localhost','root','','Citas');
 
 
 //echo $debug;
@@ -80,18 +111,26 @@ openHTML("Citas");
 menuBarI("Citas","citas.php");
 menuItems("Alta");
 menuItems("Login");
+menuItems("Servicios");
 menuItems("Cita");
 menuItems("VerCitas");
-
+if($usuario != null)
+{
+  menuItems($usuario->getNome());
+  menuItems('LogOut');
+}else {
+  menuItems('Invitado');
+}
 
 menuBarF();
-
 
 
 switch ($submit) {
   case 'Alta':
     formI("Alta usuarios","citas.php");
     echo '<input type="hidden" name="alta" />';
+    createInput("Usuario");
+    createInputP("Contraseña");
     createInput("Nombre");
     createInput("Primer Apellido");
     createInput("Segundo Apellido");
@@ -118,8 +157,9 @@ switch ($submit) {
     <div class="input-group">
       <span class="input-group-addon">Servicio</span>
       <select name="servicio" class="form-control">
-        <option value="cliente" >Cliente</option>
-        <option value="empregado" >Empregado</option>
+        ');
+        getServiceOptions();
+    print('
       </select>
     </div>
     ');
@@ -127,21 +167,36 @@ switch ($submit) {
     break;
 
   case 'VerCitas':
-    formI("VerDB","TablasDB.php");
+    formI("Citas","citas.php");
     echo '<input type="hidden" name="tabla" />';
     $sql = " SHOW TABLES FROM alumnos";
     $result =  consultaDB($con,$sql);
-    crearSelectDB("tablaSl",$result,$tablaSl);
+     crearSelectDB("tablaSl",$result,$tablaSl);
     formF("Tabla");
     break;
 
   case 'Login':
     formI("Login","citas.php");
-    echo '<input type="hidden" name="tabla" />';
-    $sql = " SHOW TABLES FROM alumnos";
-    $result =  consultaDB($con,$sql);
-    crearSelectDB("tablaSl",$result,$tablaSl);
-    formF("Tabla");
+    echo '<input type="hidden" name="login" />';
+    createInput("Usuario");
+    createInputP("Contraseña");
+    formF("Login");
+    break;
+  case 'LogOut':
+    $submit = 'Login';
+    unset($_SESSION['usuario']);
+    header("Location: citas.php");
+    break;
+  case 'Invitado':
+    $submit = 'Login';
+    header("Location: citas.php");
+    break;
+  case 'Servicios':
+    formI("servicios","citas.php");
+    echo '<input type="hidden" name="servicio" />';
+    createInput("Servicio");
+    createInputP("Precio");
+    formF("Crear");
     break;
 
   default:
@@ -154,121 +209,87 @@ finishHTML();
 $_SESSION['selNum'] = $selNum;
 $_SESSION['submit'] = $submit;
 $_SESSION['tablaSl'] = $tablaSl;
+$_SESSION['servicios'] = $servicios;
+
 
 //$con = connectDB("localhost","root","",null);
 
  //crearDB($con,"persona2");
 
+function altaUsuario($con){
+session_start();
+  $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
+  $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
+  $nome = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
+  $ape1 = isset($_POST['Primer_Apellido']) ? $_POST['Primer_Apellido'] : null;
+  $ape2 = isset($_POST['Segundo_Apellido']) ? $_POST['Segundo_Apellido'] : null;
+  $tlf = isset($_POST['Telefono']) ? $_POST['Telefono'] : null;
+  $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : null;
 
+  $usuario  =  new Usuario($id,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+  $sql = sprintf(
+  "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
+  VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
+  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s')",
+  $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
 
-function crearTabla($con){
-  $auxC = 0;
-  $auxT = 0;
-  $arrayC = Array();
-  $arrayT = Array();
-
-
-
-  foreach ($_POST as $key => $value) {
-    if($key == "columna".$auxC)
-    {
-      $arrayC[$auxC] = $value;
-      $auxC++;
-    }
-    if($key == "tipo".$auxT)
-    {
-      if($value == "VarChar")
-      {
-          $arrayT[$auxT] = $value."(100)";
-      }else{
-          $arrayT[$auxT] = $value;
-      }
-      $auxT++;
-    }
-  }
-$sql = "create table ".$_POST['NombreTabla']." ( ";
-
-  for($i=0;$i<count($arrayC);$i++)
-  {
-
-    if($i== (count($arrayC)-1))
-    {
-        $sql = $sql.$arrayC[$i]." ".$arrayT[$i]." )";
-    }else {
-      $sql = $sql.$arrayC[$i]." ".$arrayT[$i].", ";
-    }
-  }
-
-  $error = consultaDB($con,$sql);
-echo $error;
+  mysqli_query($con, $sql);
+  echo mysqli_error($con);
 }
 
-function verColumnas($con,$tablaSl){
-
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-
-  while ($fieldinfo = mysqli_fetch_row($result))
-  {
-      createInput($fieldinfo[0]);
-  }
-}
-
-function insertarTabla($con,$tablaSl)
+function login ($con)
 {
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-  $aux=0;
-  $array = array();
-  $values = "";
+  global  $submit;
+  $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
+  $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
 
-  while ($fieldinfo = mysqli_fetch_row($result))
-  {
-    foreach ($_POST as $key => $value) {
-      if($key == $fieldinfo[0])
-        $array[$aux] = $value;
-    }
-    $aux++;
-  }
-  for($i=0;$i<count($array);$i++)
-  {
-    if($i === (count($array)-1))
-    {
-      $values = $values."'".$array[$i]."'";
-    }else {
-      $values = $values."'".$array[$i]."', ";
-    }
-  }
+  $sql = sprintf(
+  "SELECT * FROM usuario WHERE id= '%s' and password= '%s'",
+  $id,$pass);
 
-  $sql =  "INSERT INTO ".$tablaSl." VALUES (".$values.") " ;
-  var_dump($sql);
-  $result = consultaDB($con,$sql);
-  echo $result;
+  $result = mysqli_query($con, $sql);
+  echo mysqli_error($con);
+
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+  if($row != '')
+  {
+
+    $usuario  =  new Usuario($row['id'],$row['password'],$row['tipo'],$row['nome'],$row['apelido1'],$row['apelido2'],$row['telefono']);
+
+    $_SESSION['usuario'] = serialize($usuario);
+    $submit = 'Cita';
+
+    header("Location: citas.php");
+
+  }else {
+    $submit = 'Alta';
+
+    header("Location: citas.php");
+  }
 
 }
 
-function verDatosTabla($con,$tablaSl){
 
-  $sql = " SHOW COLUMNS FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-  $arrayC = array();
-  $aux=0;
+function getServiceOptions(){
+  $servicios = Array();
 
-  while ($fieldinfo = mysqli_fetch_row($result))
+  $sql = sprintf(
+  "SELECT * FROM servicis",
+  $id,$pass);
+
+  $result = mysqli_query($con, $sql);
+  echo mysqli_error($con);
+
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+  while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
   {
-      $arrayC[$aux] = $fieldinfo[0];
-      $aux++;
+    $servicios[0]  =  new Servicio($row['id'],$row['nome'],$row['precio']);
   }
-
-  $sql = " select * FROM ".$tablaSl;
-  $result =  consultaDB($con,$sql);
-
-   while ($fieldinfo = mysqli_fetch_array($result))
-  {
-    for($i=0;$i<$aux;$i++){
-      echo $fieldinfo[$arrayC[$i]]."</br>";
-    }
-  }
+  return $servicios;
 }
+
+
+
 
  ?>

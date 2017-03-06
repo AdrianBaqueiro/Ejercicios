@@ -2,14 +2,16 @@
   class Usuario {
     private $id;
     private $password;
+    private $tipo;
     private $nome;
     private $apellido1;
     private $apellido2;
     private $telefono;
-    private $tipo;
+
 
       public function __construct($id,$password,$tipo,$nome,$apellido1,$apellido2,$telefono)
       {
+
         $this->id = $id;
         $this->password = $password;
         $this->tipo = $tipo;
