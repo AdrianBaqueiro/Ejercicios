@@ -24,8 +24,6 @@ class Servicio {
     function setPrezo($prezo){
       $this->prezo = $prezo;
     }
-
-
 }
 
 

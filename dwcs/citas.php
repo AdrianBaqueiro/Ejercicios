@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 include('functions/DB.php');
 include('functions/html.php');
 include('functions/interface.php');
@@ -6,9 +9,8 @@ include('clases/cita.php');
 include('clases/usuario.php');
 include('clases/servicio.php');
 
-session_start();
 
-
+var_dump($_POST);
 
 $con;
 $auxC;
@@ -31,20 +33,21 @@ if(isset($_SESSION['usuario']))
 {
   $usuario = null;
 }
+
 if(isset($_SESSION['servicios']))
 {
-  $usuario = unserialize($_SESSION['servicios']);
+  $servicio = unserialize($_SESSION['servicios']);
 }else
 {
-  $usuario = null;
+  $servicio = null;
 }
 
 $con = connectDB('localhost','root','',null);
-<<<<<<< HEAD
+
 //if para crear la base de datos y las tablas correspondientes, en caso de que no existan
-=======
+
 //if para crear la base de datos y las tablas correspondientes.
->>>>>>> origin/master
+
 if(crearDB($con,"Citas"))
 {
   $con = connectDB('localhost','root','','Citas');
@@ -82,11 +85,8 @@ if(crearDB($con,"Citas"))
     ";
   consultaDB($con,$sql);
   mysqli_close($con);
-<<<<<<< HEAD
   }
-=======
-}
->>>>>>> origin/master
+
   $con = connectDB('localhost','root','','Citas');
 
   //if funciones relacionadas con los submits
@@ -101,28 +101,16 @@ if(crearDB($con,"Citas"))
   {
     altaUsuario($con);
   }
-<<<<<<< HEAD
   if(isset($_POST['login']))
   {
     login($con);
   }
   if(isset($_POST['servicio']))
   {
-    login($con);
+    crearServicio($con);
   }
 
-
-=======
-
-
-
-
-
-
->>>>>>> origin/master
-
 //echo $debug;
-//var_dump($_POST);
 
 openHTML("Citas");
 menuBarI("Citas","citas.php");
@@ -198,7 +186,6 @@ switch ($submit) {
     createInput("Usuario");
     createInputP("Contraseña");
     formF("Login");
-<<<<<<< HEAD
     break;
   case 'LogOut':
     $submit = 'Login';
@@ -213,10 +200,8 @@ switch ($submit) {
     formI("servicios","citas.php");
     echo '<input type="hidden" name="servicio" />';
     createInput("Servicio");
-    createInputP("Precio");
+    createInput("Precio");
     formF("Crear");
-=======
->>>>>>> origin/master
     break;
 
   default:
@@ -224,12 +209,11 @@ switch ($submit) {
     break;
 }
 
-
 finishHTML();
 $_SESSION['selNum'] = $selNum;
 $_SESSION['submit'] = $submit;
 $_SESSION['tablaSl'] = $tablaSl;
-$_SESSION['servicios'] = $servicios;
+//$_SESSION['servicios'] = $servicios;
 
 
 //$con = connectDB("localhost","root","",null);
@@ -237,8 +221,7 @@ $_SESSION['servicios'] = $servicios;
  //crearDB($con,"persona2");
 
 function altaUsuario($con){
-<<<<<<< HEAD
-session_start();
+
   $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
   $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
   $nome = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
@@ -251,7 +234,7 @@ session_start();
   $sql = sprintf(
   "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
   VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
-  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s')",
+  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s' ",
   $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
 
   mysqli_query($con, $sql);
@@ -292,10 +275,29 @@ function login ($con)
 
 
 function getServiceOptions(){
+
+    $nombre = isset($_POST['Servicio']) ? $_POST['Servicio'] : null;
+    $precio = isset($_POST['Precio']) ? $_POST['Precio'] : null;
+
+    $servicio  =  new Servicio($nome,$prezo);
+    $sql = sprintf(
+    "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
+    VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
+    password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s' ",
+    $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+
+    mysqli_query($con, $sql);
+    echo mysqli_error($con);
+
+}
+
+
+
+function crearServicio(){
   $servicios = Array();
 
   $sql = sprintf(
-  "SELECT * FROM servicis",
+  "SELECT * FROM servicios",
   $id,$pass);
 
   $result = mysqli_query($con, $sql);
@@ -308,32 +310,6 @@ function getServiceOptions(){
     $servicios[0]  =  new Servicio($row['id'],$row['nome'],$row['precio']);
   }
   return $servicios;
+
 }
-
-
-
-=======
-
-  $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
-  $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
-  $nome = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
-  $ape1 = isset($_POST['Primer_Apellido']) ? $_POST['Primer_Apellido'] : null;
-  $ape2 = isset($_POST['Segundo_Apellido']) ? $_POST['Segundo_Apellido'] : null;
-  $tlf = isset($_POST['Telefono']) ? $_POST['Telefono'] : null;
-  $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : null;
-
-  $usuario  =  new Usuario($id,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
-  $sql = sprintf(
-  "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
-  VALUES ('%s','%s','%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE
-  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s'",
-  $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
-
-
-  mysqli_query($con, $sql);
-  echo mysqli_error($con);
-}
-
->>>>>>> origin/master
-
- ?>
+?>
