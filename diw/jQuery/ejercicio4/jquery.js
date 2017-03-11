@@ -15,6 +15,7 @@
  */
 
 $(document).ready(function() {
+<<<<<<< HEAD
 
   $('#acceder').click(function(){
     $.post("acceder.php",{"usuario":$("#usuario").val(),"password":$("#password").val()}, function(datos){
@@ -61,3 +62,9 @@ $(document).ready(function() {
 
 });
 ﻿*/
+=======
+  $.post("acceder.php",$("#usuario").val());
+
+});
+﻿
+>>>>>>> origin/master

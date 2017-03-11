@@ -11,7 +11,11 @@ if (isset($_POST['usuario']) && $_POST['usuario']!="")
 		echo "concedido";
 	}
 	else
+<<<<<<< HEAD
 	echo "erroneo";
+=======
+		echo "erroneo";
+>>>>>>> origin/master
 }
 else
 {

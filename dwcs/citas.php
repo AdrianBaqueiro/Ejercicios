@@ -40,7 +40,11 @@ if(isset($_SESSION['servicios']))
 }
 
 $con = connectDB('localhost','root','',null);
+<<<<<<< HEAD
 //if para crear la base de datos y las tablas correspondientes, en caso de que no existan
+=======
+//if para crear la base de datos y las tablas correspondientes.
+>>>>>>> origin/master
 if(crearDB($con,"Citas"))
 {
   $con = connectDB('localhost','root','','Citas');
@@ -78,7 +82,11 @@ if(crearDB($con,"Citas"))
     ";
   consultaDB($con,$sql);
   mysqli_close($con);
+<<<<<<< HEAD
   }
+=======
+}
+>>>>>>> origin/master
   $con = connectDB('localhost','root','','Citas');
 
   //if funciones relacionadas con los submits
@@ -93,6 +101,7 @@ if(crearDB($con,"Citas"))
   {
     altaUsuario($con);
   }
+<<<<<<< HEAD
   if(isset($_POST['login']))
   {
     login($con);
@@ -103,9 +112,17 @@ if(crearDB($con,"Citas"))
   }
 
 
+=======
+
+
+
+
+
+
+>>>>>>> origin/master
 
 //echo $debug;
-var_dump($_POST);
+//var_dump($_POST);
 
 openHTML("Citas");
 menuBarI("Citas","citas.php");
@@ -181,6 +198,7 @@ switch ($submit) {
     createInput("Usuario");
     createInputP("Contraseña");
     formF("Login");
+<<<<<<< HEAD
     break;
   case 'LogOut':
     $submit = 'Login';
@@ -197,6 +215,8 @@ switch ($submit) {
     createInput("Servicio");
     createInputP("Precio");
     formF("Crear");
+=======
+>>>>>>> origin/master
     break;
 
   default:
@@ -217,6 +237,7 @@ $_SESSION['servicios'] = $servicios;
  //crearDB($con,"persona2");
 
 function altaUsuario($con){
+<<<<<<< HEAD
 session_start();
   $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
   $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
@@ -291,5 +312,28 @@ function getServiceOptions(){
 
 
 
+=======
+
+  $id = isset($_POST['Usuario']) ? $_POST['Usuario'] : null;
+  $pass = isset($_POST['Contraseña']) ? $_POST['Contraseña'] : null;
+  $nome = isset($_POST['Nombre']) ? $_POST['Nombre'] : null;
+  $ape1 = isset($_POST['Primer_Apellido']) ? $_POST['Primer_Apellido'] : null;
+  $ape2 = isset($_POST['Segundo_Apellido']) ? $_POST['Segundo_Apellido'] : null;
+  $tlf = isset($_POST['Telefono']) ? $_POST['Telefono'] : null;
+  $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : null;
+
+  $usuario  =  new Usuario($id,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+  $sql = sprintf(
+  "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
+  VALUES ('%s','%s','%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE
+  password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s'",
+  $id,$pass,$tipo,$nome,$ape1,$ape2,$tlf,$pass,$tipo,$nome,$ape1,$ape2,$tlf);
+
+
+  mysqli_query($con, $sql);
+  echo mysqli_error($con);
+}
+
+>>>>>>> origin/master
 
  ?>
