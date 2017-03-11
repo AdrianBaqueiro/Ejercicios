@@ -20,9 +20,11 @@ window.onload = function(){
 	lastRandom = 0;
 	overlay = document.getElementById("body");
 	cont = 0;
+
 	document.getElementById("cont").innerHTML = "tiempo: " +cont +" s";
 	pausa = false;
 	inicio();
+	crearTablaFichas();
 	almacenarNodo();
 }
 
@@ -40,6 +42,8 @@ function inicio(){
 function crearTabla(filas,columnas){
 
 	tabla = document.createElement("table");
+	tabla.setAttribute("id","tablero");
+
 	for(i=1,s=1;i<=filas;i++)
 	{
 		tr = document.createElement("tr");
@@ -62,7 +66,7 @@ function crearTablaFichas(){
 
 	tabla = document.createElement("table");
 	tabla.setAttribute("id","tablaFichas");
-	for(i=1,s=1;i<=filas;i++)
+	for(i=1,s=1;i<=6;i++)
 	{
 		tr = document.createElement("tr");
 		for(e=1;e<=columnas;e++,s++)

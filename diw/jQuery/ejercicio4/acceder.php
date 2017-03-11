@@ -11,7 +11,7 @@ if (isset($_POST['usuario']) && $_POST['usuario']!="")
 		echo "concedido";
 	}
 	else
-		echo "erroneo";
+	echo "erroneo";
 }
 else
 {

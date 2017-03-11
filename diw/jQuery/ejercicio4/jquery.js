@@ -15,7 +15,49 @@
  */
 
 $(document).ready(function() {
-  $.post("acceder.php",$("#usuario").val());
+
+  $('#acceder').click(function(){
+    $.post("acceder.php",{"usuario":$("#usuario").val(),"password":$("#password").val()}, function(datos){
+      console.log(datos);
+      if(datos=="concedido"){
+       window.location.replace("acceder.php");
+     }else {
+        window.alert("usuario o contrase;a")
+      }
+
+    });
+  });
+});
+/*
+  $.post("chequea.php",{"codigo":$(this).val()},function(datos){
+
+  			//Aquí gestionaremos los datos devueltos por el servidor
+
+  				if(datos.estado=="OK")
+
+  				{
+
+  					$("#enviar").attr("disabled",false);
+
+  					$("#errores").html(datos.mensaje).removeClass("rojos").addClass("verdes").fadeIn(500).fadeOut(5000);
+
+  				}
+
+  				else
+
+  				{
+
+  					$("#enviar").attr("disabled",true);
+
+  					$("#identificador").focus();
+
+  					$("#errores").html(datos.mensaje).removeClass("verdes").addClass("rojos").fadeIn(500).fadeOut(5000);
+
+  				}
+
+  			},"json");
+
+  		}
 
 });
-﻿
+﻿*/
