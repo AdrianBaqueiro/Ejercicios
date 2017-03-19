@@ -19,7 +19,6 @@
         $this->apellido1 = $apellido1;
         $this->apellido2 = $apellido2;
         $this->telefono = $telefono;
-
       }
 
 
@@ -43,6 +42,24 @@
       }
       function getTl(){
         return   $this->telefono;
+      }
+      function darBaja($con){
+
+         $sql = "UPDATE usuario SET estado = 0  WHERE id='" .$this->id ."'";
+
+         mysqli_query($con, $sql);
+         echo mysqli_error($con);
+      }
+      function darAlta($con){
+        $sql = sprintf(
+        "INSERT INTO usuario (id,password,tipo,nome,apelido1,apelido2,telefono)
+        VALUES ('%s','%s','%s','%s','%s','%s','%s')  ON DUPLICATE KEY UPDATE
+        password='%s', tipo='%s', nome='%s', apelido1='%s', apelido2='%s', telefono='%s',estado = '1' ",
+        $this->id,$this->password,$this->tipo,$this->nome,$this->apellido1,$this->apellido2,$this->telefono,
+        $this->password,$this->tipo,$this->nome,$this->apellido1,$this->apellido2,$this->telefono);
+
+         mysqli_query($con, $sql);
+         echo mysqli_error($con);
       }
 
 

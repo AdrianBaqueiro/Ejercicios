@@ -34,10 +34,11 @@ function consultaDB($con,$query)
   $e;
   try{
   $e =  $con->query($query);
-  return $e.mysqli_error($con);
+  return $e;
+  echo mysqli_error($con);
   }catch(Exception $e)
   {
-    return $e.mysqli_error($con);
+    return mysqli_error($con);
   }
 
 }

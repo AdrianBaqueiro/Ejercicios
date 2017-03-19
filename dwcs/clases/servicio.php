@@ -1,7 +1,6 @@
 <?php
 
 class Servicio {
-  protected $id;
   private $nome;
   private $prezo;
 

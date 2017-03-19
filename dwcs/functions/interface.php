@@ -57,9 +57,14 @@ function formI($title,$file){
 }
 function formF($name)
 {
-print('
-  <input class="btn btn-default navbar-btn" type="submit" value="'.$name.'" class="btn-group" />
-</form>');
+  if($name == null){
+    print ( ' </form>');
+  }else {
+    print('
+      <input class="btn btn-default navbar-btn" type="submit" value="'.$name.'" class="btn-group" />
+    </form>');
+  }
+
 
 
 }
@@ -141,18 +146,27 @@ function crearSelectTipo($value){
   ');
 
 }
+function crearLabel($value1,$value2)
+{
+
+  print (' <h4>'.$value1.' <span class="label label-default"> '.$value2.'</span></h4>');
+
+}
 function crearSelectDB($id,$consulta,$tablaSl){
+  //var_dump($consulta);
+
   print('
     <div  class="input-group">
-      <span class="input-group-addon">Tablas</span>
+      <span class="input-group-addon">'.$id.'</span>
       <select name="'.$id.'" class="form-control" onChange="this.form.submit()" >
 ');
+
     while ($fieldinfo = mysqli_fetch_row($consulta))
     {
       if($tablaSl == $fieldinfo[0])
-        echo "<option value='{$fieldinfo[0]}' selected>{$fieldinfo[0]}</option>";
+        echo "<option value='{$fieldinfo[0]}' selected>{$fieldinfo[3]} {$fieldinfo[4]}</option>";
       else {
-          echo "<option value='{$fieldinfo[0]}'>{$fieldinfo[0]}</option>";
+          echo "<option value='{$fieldinfo[0]}'>{$fieldinfo[3]} {$fieldinfo[4]}</option>";
       }
     }
 

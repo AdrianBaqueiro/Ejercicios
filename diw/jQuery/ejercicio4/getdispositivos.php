@@ -4,8 +4,8 @@ require_once("conexion.php");
 if (isset($_POST['idestancia']))
 {
     $sql="select * from estancias where idestancia='{$_POST['idestancia']}'";
-    $registros=mysql_query($sql,$conexion) or die(mysql_error());
-    $fila=mysql_fetch_assoc($registros);
+    $registros=mysqli_query($conexion,$sql,) or die(mysqli_error());
+    $fila=mysqli_fetch_assoc($registros);
     
     for ($i=0; $i<$fila['numequipos'];$i++)
     {

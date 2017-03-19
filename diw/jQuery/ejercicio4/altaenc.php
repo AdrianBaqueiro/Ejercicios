@@ -2,15 +2,15 @@
 require_once("conexion.php");
 
 $sql="select * from estancias order by estancia";
-$registros=mysql_query($sql,$conexion) or die(mysql_error());
+$registros=mysqli_query($conexion, $sql) or die(mysqli_error());
 
 
 if (isset($_POST['idencargado']) && $_POST['idencargado']!="")
 {
     $sql=sprintf("insert into encargados(idencargado,nombre,apellidos, email, password,tipo) values('%s','%s','%s','%s','%s','%s')",strtolower($_POST['idencargado']),$_POST['nombre'],$_POST['apellidos'],$_POST['email'],md5($_POST['password']),$_POST['tipo']);
-    mysql_query($sql,$conexion) or die(mysql_error());
+    mysqli_query($conexion, $sql) or die(mysqli_error());
 
-    // insertamos a continuación las estancias para cada encargado.
+    // insertamos a continuaciï¿½n las estancias para cada encargado.
     if (count($_POST['estancias'])!=0)
     {
         $sql="insert into ee values ";
@@ -18,11 +18,11 @@ if (isset($_POST['idencargado']) && $_POST['idencargado']!="")
         {
             $sql.=sprintf("('%s','%s'),",$_POST['estancias'][$i],strtolower($_POST['idencargado']));
         }
-        
+
         $sql=substr($sql,0,strlen($sql)-1);
-        mysql_query($sql,$conexion) or die(mysql_error());
+        mysqli_query($conexion,$sql) or die(mysqli_error());
     }
-    
+
     header("location: encargados.php");
 }
 else
@@ -51,7 +51,7 @@ else
     <label for="estancias">Estancias Asignadas: </label>
 <?php
     // Imprimimos las estancias asignadas.
-    while ($fila=mysql_fetch_assoc($registros))
+    while ($fila=mysqli_fetch_assoc($registros))
     {
         echo $fila['estancia']."<input type=\"checkbox\" name=\"estancias[]]\" value=\"".$fila['idestancia']."\">, ";
     }

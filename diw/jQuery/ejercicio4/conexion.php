@@ -3,8 +3,7 @@
 $hostname = "localhost";
 $database = "incidencias";
 $username = "root";
-$password = "";
+$password = ""; 
 
-$conexion = mysqli_connect($hostname, $username, $password) or die(mysql_error());
-mysqli_select_db($conexion,$database);
+$conexion = mysqli_connect($hostname, $username, $password, $database) or die(mysqli_error());
 ?>

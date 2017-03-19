@@ -1,13 +1,19 @@
 <?php
 require("cabeceira.html");
-// Na cabeceira xa está cargada a librería de jQuery para que esté dispoñible no resto de componentes da páxina.
+// Na cabeceira xa estï¿½ cargada a librerï¿½a de jQuery para que estï¿½ dispoï¿½ible no resto de componentes da pï¿½xina.
 ?>
 
 
-<!-- Programa aqui o código de jQuery -->
+<!-- Programa aqui o cï¿½digo de jQuery -->
+<script language="javascript">
+$(document).ready(function(){
+	   $("#central").load('listadoestancias.php', function(){
+
+     });
+});
+</script>
 
 
-
-<?php 
+<?php
     require("resto.html");
 ?>
