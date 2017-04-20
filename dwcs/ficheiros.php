@@ -26,6 +26,7 @@ echo feof($file);
 $busqueda = "Hola";
 $replazo = "Bye ";
 $word = "";
+
 for($i=0;!feof($file);$i++ )
 {
   fseek($file,$i);
@@ -42,7 +43,6 @@ for($i=0;!feof($file);$i++ )
   }else
     $word = $word."". $aux;
   //echo $word;
-
 }
 //echo feof($file);
 
