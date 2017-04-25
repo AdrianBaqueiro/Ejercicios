@@ -1,0 +1,10 @@
+section{
+border: 1px solid black;
+margin: 5px;
+text-align: center;
+
+}
+article {
+  margin: 5px;
+  border: 1px solid blue;
+}

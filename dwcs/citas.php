@@ -496,6 +496,7 @@ function verCita($con){
 }
 
 function verUsuario($con){
+  
   $usuarios = isset($_POST['Usuarios']) ? $_POST['Usuarios'] : null;
   $sql = "SELECT * FROM usuario where id = '".$usuarios."'";
   $result = mysqli_query($con, $sql);
