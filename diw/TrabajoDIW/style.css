@@ -7,4 +7,20 @@ text-align: center;
 article {
   margin: 5px;
   border: 1px solid blue;
+  text-align: justify;
+}
+h1 {
+
+text-align: center;
+
+}
+nav{
+  background-color: black;
+  height: 40px;
+  text-align: center;
+  padding-top: 20px;
+}
+a {
+  margin-top: 10px;
+  color: red;
 }
