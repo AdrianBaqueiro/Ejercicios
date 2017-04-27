@@ -10,7 +10,7 @@ window.onload = function(){
   //console.log(name.split("."));
   aux = name.split(".");
   name = aux[0];
-  //console.log(name);
+  console.log(name);
   a = document.getElementsByTagName("a");
 
   //console.log(a[0].innerHTML);

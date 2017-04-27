@@ -1,41 +1,33 @@
 <?php
+  $id= 1;
+  $nome = "Juan";
+  $apelido = "Perez";
+  try{
+    $conn = new PDO('mysql:host=localhost;dbname=incidencias','root', '');
+    $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    //$sql = $conn->prepare('INSERT into usuario  ( nome, apelido )  values ( ? , ? )');
+    $sql = $conn->prepare('SELECT * FROM usuario WHERE nome = :Nome');
+    /*
+    $sql->bindParam(1,$nome,PDO::PARAM_STR);
+    $sql->bindParam(2,$apelido,PDO::PARAM_STR);
+    */
+    $sql->bindParam(":Nome",$nome,PDO::PARAM_STR);
 
-  dbh = mysql_connect($servidor,$usuario,$pass);
-  mysql_select_db($base_de_datos,$dbh);
-  $sql = "SET AUTOCOMMIT=0;";
-  $resultado = mysql_query($sql, $dbh);
-  $sql = "BEGIN;";
-  $resultado = mysql_query($sql, $dbh);
-  $sql = "SELECT * FROM primeira; ";
-  $resultado = mysql_query($sql, $dbh);
-  $sql = "INSERT INTO `segunda` (`ide`, `descripcion`) VALUES ('', 'Outro
-  valor');";
-  $resultado = mysql_query($sql, $dbh);
-  $sql = "INSERT INTO `primeira` (`ide`, `ripcion`) VALUES ( ́ ́,  ́Outro valor ́);";
-  $resultado = mysql_query($sql, $dbh);
-  if ($resultado) {
-  echo 'OK';
-  echo ' ';
-  $sql = "COMMIT";
-  $resultado = mysql_query($sql, $dbh);
+    $nome = "Juan";
+    $apelido = "Perez";
+    $sql->setFetchMode(PDO::FETCH_LAZY);
+  //$sql->execute(array('ss', "Juan","Perez"));
+    $sql->execute();
+    $resultado= $sql->fetch();
+    echo $resultado->nome;
+
+
+    foreach($resultado as $row) {
+      //echo $row->nome;
+    //  echo  $row["nome"] . " " .  $row["apelido"] . "</br>";
+    }
+  }catch(PDOException $e){
+    echo  "ERRO: " . $e->getMessage();
   }
-  else
-  {
-  echo 'MAL';
-  echo ' ';
-  echo 'EXECÚTASE O ROOLBACK';
-  echo ' ';
-  $sql = "ROLLBACK;";
-  $resultado = mysql_query($sql, $dbh);
-  }
 
-
-
-
-
-
-
-
-
-
- ?>
+  ?>

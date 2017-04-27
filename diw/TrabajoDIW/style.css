@@ -24,3 +24,6 @@ a {
   margin-top: 10px;
   color: red;
 }
+article > header > h1{
+  text-decoration: underline;
+}
