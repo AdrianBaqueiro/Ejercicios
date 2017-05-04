@@ -217,7 +217,7 @@ function verDatosTabla($con,$tablaSl){
   $result =  consultaDB($con,$sql);
   $arrayC = array();
   $aux=0;
-  
+
   while ($fieldinfo = mysqli_fetch_row($result))
   {
       $arrayC[$aux] = $fieldinfo[0];
