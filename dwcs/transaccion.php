@@ -31,3 +31,33 @@
   }
 
   ?>
+
+  <?php
+
+  //$db = getcwd() . "\\" . 'proba2.mdb';
+  $db="dbs\bd1.mdb";
+  echo "db ".$db."<br>";
+  if (!file_exists($db)) {
+      die("non existe a bd !");
+  }
+  else
+    echo "existe a BD<br>";
+
+  $db_conexion = new PDO('odbc:DRIVER={Microsoft Access Driver (*.mdb)};DBQ='.realpath($db));
+
+  $txtsql = 'Select * From tabla1';
+  $consulta = $db_conexion->prepare($txtsql);
+  $consulta->setFetchMode(PDO::FETCH_ASSOC);
+  $consulta->execute();
+
+  //Obtemos os datos cun Bucle
+
+  foreach($consulta as $index => $row){
+        //  echo ''.$row['nome].'
+      echo "id ".$row['Id']." ";
+  		echo "nome ".$row['Nombre']." ";
+  		echo "apelido ".$row['Apellido']."<br>";
+  }
+
+
+  ?>

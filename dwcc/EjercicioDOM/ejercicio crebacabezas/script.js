@@ -10,6 +10,7 @@ var lastRandom;
 var cont;
 var contI;
 var pausa;
+
 window.onload = function(){
 	posicion = 15;
 	arriba = true;
