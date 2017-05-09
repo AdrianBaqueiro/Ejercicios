@@ -27,6 +27,19 @@ a {
 article > header > h1{
   text-decoration: underline;
 }
+main{
+  width: 800px;
+  margin: auto;
+}
+header{
+  margin-bottom: 19px;
+  margin-top: 49px;
+}
+
+
+
+
+
 .barranigga{
 background-color: black;
 height: 50px;

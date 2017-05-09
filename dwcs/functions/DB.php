@@ -14,6 +14,22 @@ function connectDB($server,$user,$pass,$db){
   return $mysqli;
 }
 
+function connectDB_PDO($server,$user,$pass){
+   global $debug;
+   try{
+
+    $mysqli = new PDO($server,$user,$pass) or die("error");
+
+    $debug = "<p>conexion establecida con la base de datos</p>";
+    return $mysqli;
+
+  }catch (PDOException $e)
+  {
+    return $mysqli."".$e->getMessage();
+  }
+}
+
+
 function crearDB($con,$nameDB){
    global $debug;
   try{
@@ -29,6 +45,7 @@ function crearDB($con,$nameDB){
       return $e;
   }
 }
+
 function consultaDB($con,$query)
 {
   $e;
@@ -39,6 +56,20 @@ function consultaDB($con,$query)
   }catch(Exception $e)
   {
     return mysqli_error($con);
+  }
+
+}
+
+function consultaDB_PDO($con,$query)
+{
+  $e;
+  try{
+  $e =  $con->query($query);
+  return $e;
+  echo mysqli_error($con);
+  }catch(Exception $e)
+  {
+    return mysqli_error($con." ".$e);
   }
 
 }
