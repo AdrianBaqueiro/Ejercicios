@@ -29,6 +29,48 @@ window.onload = function(){
 	pausa = false;
 	inicio();
 	almacenarNodo();
+	DB();
+}
+
+
+function DB(){
+
+		var obxectoDB = {};
+		obxectoDB.indexedDB = {};
+		obxectoDB.indexedDB.db = null;
+		obxectoDB.indexedDB.onerror = function(e){
+			console.log(e);
+		};
+		obxectoDB.indexedDB.open = function(){
+			var version = 1;
+			var abrir = indexedDB.open("crebacabezas", version); // abrir --> peticiÃ³n (apertura)
+			// Hai que actualizar a base de datos
+			abrir.onupgradeneeded = function(e){
+				console.log("Actualizando a base de datos... ");
+				obxectoDB.indexedDB.db = e.target.result;
+				var db = obxectoDB.indexedDB.db;
+				if(db.objectStoreNames.contains("imagenes")){
+					// OperaciÃ³ns a realizar se xa existe o almacÃ©n
+				} else {
+					// OperaciÃ³ns a realizar se non existÃ­a o almacÃ©n, por exemplo:
+					var almacen = db.createObjectStore("imagenes",
+							{keyPath: "id", autoIncrement:true,keyPath: "ruta", Text});
+					almacen.createIndex("idObxectoIndex",
+									"idObxecto", {unique:false});
+				}
+				console.log("VersiÃ³n da base de datos: " + db.version);
+			}
+			// Abriuse con Ã©xito
+			abrir.onsuccess = function(e){
+				console.log("A base de datos nomeDB abriuse sen erros");
+				obxectoDB.indexedDB.db = e.target.result;
+				console.log("VersiÃ³n da base de datos: " + db.version);
+			}
+			// Produciuse un erro
+			abrir.onerror = obxectoDB.indexedDB.onerror;
+		}
+
+
 }
 
 

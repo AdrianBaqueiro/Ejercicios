@@ -25,7 +25,7 @@ function connectDB_PDO($server,$user,$pass){
 
   }catch (PDOException $e)
   {
-    return $mysqli."".$e->getMessage();
+    return $e->getMessage();
   }
 }
 
@@ -64,12 +64,12 @@ function consultaDB_PDO($con,$query)
 {
   $e;
   try{
-  $e =  $con->query($query);
-  return $e;
-  echo mysqli_error($con);
+    $e =  $con->prepare($query);
+    $e->execute();
+    return $e;
   }catch(Exception $e)
   {
-    return mysqli_error($con." ".$e);
+    echo $e;
   }
 
 }
