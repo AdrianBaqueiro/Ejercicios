@@ -10,16 +10,43 @@ article {
   text-align: justify;
 }
 h1 {
-
+font-size: 300%;
 text-align: center;
-
+padding: 15px;
 }
 nav{
 /*  background-color: black;*/
   height: 40px;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 29px;
+  padding-bottom: 15px;
+  margin-right: 5px;
+
+  background: rgba(158,205,225,1);
+  background: -moz-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(158,205,225,1)), color-stop(100%, rgba(244,248,249,1)));
+  background: -webkit-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
+  background: -o-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
+  background: -ms-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
+  background: linear-gradient(to right, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ecde1', endColorstr='#f4f8f9', GradientType=1 );
+
+
 }
+
+nav > ul > li > a {
+  color: #3a86b8;
+  text-decoration:none;
+  border: 5px;
+}
+nav > ul > li {
+  float: left;
+  list-style: none;
+  border-left: 1px solid #3a86b8;
+  width:85px;
+  height: 15px; repeat-y;
+}
+
 a {
   margin-top: 10px;
   color: red;
@@ -33,7 +60,25 @@ main{
 }
 header{
   margin-bottom: 19px;
-  margin-top: 49px;
+  margin-top: 15px;
+  margin-bottom: 150px;
+}
+#descripcion {
+  width:500px;
+  padding-left:15px;
+  padding-right:15px;
+  font-size:150 %;
+  font-weight:100;
+}
+#imagen{
+
+   background-image: url("../img/news.png");
+   width: 171px;
+   height: 150px;
+   position: absolute;
+   margin-left: 76%;
+
+
 }
 
 

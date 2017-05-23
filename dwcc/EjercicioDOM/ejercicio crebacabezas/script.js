@@ -12,6 +12,7 @@ var contI;
 var pausa;
 
 window.onload = function(){
+
 	posicion = 15;
 	arriba = true;
 	abajo = true;
@@ -35,20 +36,27 @@ window.onload = function(){
 
 function DB(){
 
-		var obxectoDB = {};
+		var obxectoDB = window;
 		obxectoDB.indexedDB = {};
 		obxectoDB.indexedDB.db = null;
+
 		obxectoDB.indexedDB.onerror = function(e){
-			console.log(e);
+			console.log(e+"asd");
 		};
+
 		obxectoDB.indexedDB.open = function(){
-			var version = 1;
-			var abrir = indexedDB.open("crebacabezas", version); // abrir --> peticiÃ³n (apertura)
+
+			var version = 3;
+			var abrir = indexedDB.open("crebacabezas", version);
+			 // abrir --> peticiÃ³n (apertura)
 			// Hai que actualizar a base de datos
+			console.log("asds");
 			abrir.onupgradeneeded = function(e){
 				console.log("Actualizando a base de datos... ");
+
 				obxectoDB.indexedDB.db = e.target.result;
 				var db = obxectoDB.indexedDB.db;
+
 				if(db.objectStoreNames.contains("imagenes")){
 					// OperaciÃ³ns a realizar se xa existe o almacÃ©n
 				} else {
@@ -67,10 +75,10 @@ function DB(){
 				console.log("VersiÃ³n da base de datos: " + db.version);
 			}
 			// Produciuse un erro
-			abrir.onerror = obxectoDB.indexedDB.onerror;
+			request.onerror = function(event) {
+  			console.log(event);
+			};
 		}
-
-
 }
 
 

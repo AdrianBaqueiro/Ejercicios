@@ -50,7 +50,7 @@
     ');
   }
 function formI($title,$file){
-  print('<form method="POST"  class="well"  action="'.$file.'">
+  print('<form name="'.$title.'" method="POST"  class="well"  action="'.$file.'">
       <h2>'.$title.'</h2>
   ');
 
@@ -61,7 +61,7 @@ function formF($name)
     print ( ' </form>');
   }else {
     print('
-      <input class="btn btn-default navbar-btn" type="submit" value="'.$name.'" class="btn-group" />
+      <input class="btn btn-default navbar-btn" name="'.$name.'" type="submit" value="'.$name.'" class="btn-group" />
     </form>');
   }
 

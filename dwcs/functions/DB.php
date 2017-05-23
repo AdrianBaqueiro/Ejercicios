@@ -35,7 +35,7 @@ function crearDB($con,$nameDB){
   try{
     $query = "Create DATABASE ".$nameDB;
     if($con->query($query) === true)
-        $debug =  true;
+        $debug = true;
       else {
        $debug = false;
       }
@@ -45,6 +45,25 @@ function crearDB($con,$nameDB){
       return $e;
   }
 }
+
+function crearDB_PDO($con,$nameDB){
+   global $debug;
+  try{
+    $query = "Create DATABASE ".$nameDB;
+    $e =  $con->prepare($query);
+
+    if($e->execute())
+        $debug = true;
+      else {
+       $debug = false;
+      }
+      return $debug;
+  }catch(Exception $e)
+  {
+      return $e;
+  }
+}
+
 
 function consultaDB($con,$query)
 {
