@@ -13,6 +13,7 @@ $(document).ready(function() {
              $("#debug").text("no funca") ;
             }
         });
+      });
   $("[name='CrearUsuario']").submit(function(e){
         e.preventDefault();
         $.post("ajax.php",
@@ -30,9 +31,10 @@ $(document).ready(function() {
             }else {
              $("#debug").text("error") ;
             }
-        });
 
-    });
+        });
+      });
+});
   // $("[name='Login']").click(function(){
   //   $("form").preventDefault();
   //   // $("form").submit(function(e){
@@ -48,4 +50,3 @@ $(document).ready(function() {
   //
   //   });
   // });
-});

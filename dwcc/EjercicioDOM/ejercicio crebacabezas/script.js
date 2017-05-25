@@ -11,6 +11,8 @@ var cont;
 var contI;
 var pausa;
 
+
+
 window.onload = function(){
 
 	posicion = 15;
@@ -36,49 +38,92 @@ window.onload = function(){
 
 function DB(){
 
+	window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB;
+	if ('webkitIndexedDB' in window) {
+		window.IDBTransaction = window.webkitIDBTransaction;
+		window.IDBKeyRange = window.webkitIDBKeyRange;
+		window.IDBCursor = window.webkitIDBCursor;
+		window.IDBDatabaseException = window.webkitIDBDatabaseException;
+		window.IDBRequest = window.webkitIDBRequest;
+	}
+
 		var obxectoDB = window;
 		obxectoDB.indexedDB = {};
 		obxectoDB.indexedDB.db = null;
 
-		obxectoDB.indexedDB.onerror = function(e){
-			console.log(e+"asd");
+
+
+		const dbName = "crebacabezas";
+		var request = indexedDB.open(dbName, 3);
+
+		request.onerror = function(e){
+			console.log(e);
+			window.alert(e+"asd");
+		};
+		request.onsuccess = function(event) {
+  		console.log(event+"e");
+
 		};
 
-		obxectoDB.indexedDB.open = function(){
+		request.onupgradeneeded = function(event) {
+  var db = event.target.result;
 
-			var version = 3;
-			var abrir = indexedDB.open("crebacabezas", version);
-			 // abrir --> peticiÃ³n (apertura)
-			// Hai que actualizar a base de datos
-			console.log("asds");
-			abrir.onupgradeneeded = function(e){
-				console.log("Actualizando a base de datos... ");
+  // Create an objectStore to hold information about our customers. We're
+  // going to use "ssn" as our key path because it's guaranteed to be
+  // unique.
+  var objectStore = db.createObjectStore("imagenes", { keyPath: "imagenes" });
 
-				obxectoDB.indexedDB.db = e.target.result;
-				var db = obxectoDB.indexedDB.db;
+  // Create an index to search customers by name. We may have duplicates
+  // so we can't use a unique index.
 
-				if(db.objectStoreNames.contains("imagenes")){
-					// OperaciÃ³ns a realizar se xa existe o almacÃ©n
-				} else {
-					// OperaciÃ³ns a realizar se non existÃ­a o almacÃ©n, por exemplo:
-					var almacen = db.createObjectStore("imagenes",
-							{keyPath: "id", autoIncrement:true,keyPath: "ruta", Text});
-					almacen.createIndex("idObxectoIndex",
-									"idObxecto", {unique:false});
-				}
-				console.log("VersiÃ³n da base de datos: " + db.version);
-			}
-			// Abriuse con Ã©xito
-			abrir.onsuccess = function(e){
-				console.log("A base de datos nomeDB abriuse sen erros");
-				obxectoDB.indexedDB.db = e.target.result;
-				console.log("VersiÃ³n da base de datos: " + db.version);
-			}
-			// Produciuse un erro
-			request.onerror = function(event) {
-  			console.log(event);
-			};
-		}
+
+  // Use transaction oncomplete to make sure the objectStore creation is
+  // finished before adding data into it.
+  objectStore.transaction.oncomplete = function(event) {
+    // Store values in the newly created objectStore.
+    var customerObjectStore = db.transaction("imagenes", "readwrite").objectStore("imagenes");
+    for (var i in nodos) {
+      customerObjectStore.add(nodos[i].cloneNode(true));
+    }
+  }
+};
+
+
+		// obxectoDB.indexedDB.open = function(){
+		// 	console.log("e");
+		// 	var version = 3;
+		// 	var abrir = indexedDB.open("crebacabezas", version);
+		// 	 // abrir --> peticiÃ³n (apertura)
+		// 	// Hai que actualizar a base de datos
+		// 	console.log("asds");
+		// 	abrir.onupgradeneeded = function(e){
+		// 		console.log("Actualizando a base de datos... ");
+		//
+		// 		obxectoDB.indexedDB.db = e.target.result;
+		// 		var db = obxectoDB.indexedDB.db;
+		//
+		// 		if(db.objectStoreNames.contains("imagenes")){
+		// 			// OperaciÃ³ns a realizar se xa existe o almacÃ©n
+		// 		} else {
+		// 			// OperaciÃ³ns a realizar se non existÃ­a o almacÃ©n, por exemplo:
+		// 			var almacen = db.createObjectStore("imagenes",
+		// 					{keyPath: "id", autoIncrement:true,keyPath: "ruta", Text});
+		// 			almacen.createIndex("idObxectoIndex",
+		// 							"idObxecto", {unique:false});
+		// 		}
+		// 		console.log("VersiÃ³n da base de datos: " + db.version);
+		// 	}
+		// 	// Abriuse con Ã©xito
+		// 	abrir.onsuccess = function(e){
+		// 		console.log("A base de datos nomeDB abriuse sen erros");
+		// 		obxectoDB.indexedDB.db = e.target.result;
+		// 		console.log("VersiÃ³n da base de datos: " + db.version);
+		// 	}
+		// 	// Produciuse un erro
+		// 	request.onerror = function(event) {
+  	// 		console.log(event);
+		// 	};
+		// }
 }
 
 

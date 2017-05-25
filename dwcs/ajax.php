@@ -58,10 +58,17 @@ if(isset($_POST['validarUser']))
 }
 if(isset($_POST['usuario']))
 {
-
+    comprobarUsuario($con);
     echo "concedido";
     exit();
 }
+if(isset($_POST['id']))
+{
+    crearUsuario($con);
+    echo "concedido";
+    exit();
+}
+
 
 var_dump($_POST);
 
@@ -86,8 +93,8 @@ switch ($submit) {
     break;
   case 'CrearUsuario':
     formI("CrearUsuario","ajax.php");
-    echo '<input type="hidden" name="CrearUsuario" />';
-    
+    echo '<input type="hidden" name="crearUsuario" />';
+
     createInput("id");
     createInput("password");
     createInput("tipo");
@@ -132,7 +139,26 @@ $_SESSION['tablaSl'] = $tablaSl;
 
 
 
+function crearUsuario($con)
+{
+  $id = isset($_POST['id']) ? $_POST['id'] : null;
+  $pass = isset($_POST['password']) ? $_POST['password'] : null;
+  $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : null;
+  $nome = isset($_POST['nome']) ? $_POST['nome'] : null;
+  $dni = isset($_POST['dni']) ? $_POST['dni'] : null;
+  $email = isset($_POST['email']) ? $_POST['email'] : null;
+  $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : null;
 
+
+
+  $query = sprintf(
+  "INSERT INTO usuario (id,password,tipo,nome,dni,email,direccion)
+  VALUES ('%s','%s','%s','%s','%s','%s','%s')",
+  $id,$pass,$tipo,$nome,$dni,$email,$direccion);
+
+  $e = consultaDB_PDO($con,$query);
+
+}
 
 
 
