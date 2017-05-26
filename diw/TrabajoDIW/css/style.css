@@ -1,36 +1,40 @@
 section{
-border: 1px solid black;
+
 margin: 5px;
 text-align: center;
 
 }
 article {
   margin: 5px;
-  border: 1px solid blue;
   text-align: justify;
+  margin-bottom: 70px;
+  border-top: 1px solid black;
+  /*border-bottom: 1px solid black;*/
 }
+
+article > p {
+    margin: 5px;
+    font-size:20px;
+    font-weight:100;
+    margin-bottom: 10px;
+    position: relative;
+
+
+}
+
 h1 {
-font-size: 300%;
-text-align: center;
-padding: 15px;
+  font-size: 300%;
+  text-align: center;
+  padding: 10px;
 }
 nav{
 /*  background-color: black;*/
-  height: 40px;
+  height: 20px;
   text-align: center;
   padding-top: 29px;
   padding-bottom: 15px;
   margin-right: 5px;
-
-  background: rgba(158,205,225,1);
-  background: -moz-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(158,205,225,1)), color-stop(100%, rgba(244,248,249,1)));
-  background: -webkit-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
-  background: -o-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
-  background: -ms-linear-gradient(left, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
-  background: linear-gradient(to right, rgba(158,205,225,1) 0%, rgba(244,248,249,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ecde1', endColorstr='#f4f8f9', GradientType=1 );
-
+  background-color: white;
 
 }
 
@@ -61,8 +65,13 @@ main{
 header{
   margin-bottom: 19px;
   margin-top: 15px;
-  margin-bottom: 150px;
+  margin-bottom: 70px;
 }
+#titulo{
+
+
+}
+
 #descripcion {
   width:500px;
   padding-left:15px;
@@ -75,10 +84,22 @@ header{
    background-image: url("../img/news.png");
    width: 171px;
    height: 150px;
-   position: absolute;
+   position: relative;
    margin-left: 76%;
 
 
+}
+#n1{
+  width: 300px;
+  height: 200px;
+  float: right;
+  margin :5px;
+}
+#n2{
+  width: 300px;
+  height: 200px;
+  margin :5px;
+  margin-left: 30%;
 }
 
 
