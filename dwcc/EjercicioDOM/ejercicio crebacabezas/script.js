@@ -83,7 +83,7 @@ function DB(){
     // Store values in the newly created objectStore.
     var customerObjectStore = db.transaction("imagenes", "readwrite").objectStore("imagenes");
     for (var i in nodos) {
-      customerObjectStore.add(nodos[i].cloneNode(true));
+      customerObjectStore.add(nodos[i].getAttribute("src"));
     }
   }
 };
