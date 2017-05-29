@@ -30,6 +30,7 @@ require("../functions/DB.php");
       $query ="SELECT COUNT(id) FROM alumno";
       echo consultaDB_PDO($con,$query);
 
+
     }
 
 
