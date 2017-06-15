@@ -50,26 +50,23 @@ function DB () {
   var request = indexedDB.open(dbName, 3)
 
   request.onerror = function (e) {
-    console.log(e)
-    window.alert(e + 'asd')
   }
   request.onsuccess = function (event) {
-  		console.log(event + 'e')
+
   }
 
   request.onupgradeneeded = function (event) {
     var db = event.target.result
 
-    var objectStore = db.createObjectStore('imagenes', { keyPath: 'id', autoIncrement: true })
-    objectStore.createIndex('posicion', 'posicion', { unique: false })
-    objectStore.createIndex('partida', 'partida', { unique: false })
+    var objectStore = db.createObjectStore('imagenes', { keyPath: 'id'})
+  //  var index = objectStore.createIndex('partida', 'partida')
 
-    objectStore.transaction.oncomplete = function (event) {
-		  var customerObjectStore = db.transaction('imagenes', 'readwrite').objectStore('imagenes')
+    nodos = document.getElementsByTagName('img')
+    NodeContainer = new NodeContainer('partida1', nodos, '12')
+    console.log(nodos)
 
-      for (var i in nodos) {
-        customerObjectStore.add(nodos[i].getAttribute('src'))
-      }
+    for (var i = 0; i < nodos.lenght; i++) {
+      objectStore.put(NodeContainer)
     }
   }
 }
